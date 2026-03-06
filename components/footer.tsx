@@ -1,8 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import Image from "next/image"
-import { Mail, MapPin, Phone } from "lucide-react"
+import { Facebook, Instagram, Linkedin, Mail, MapPin, Phone, Twitter, Smartphone } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useLanguage } from "@/contexts/language-context"
 
@@ -17,24 +16,37 @@ export function Footer() {
           {/* Company Info */}
           <div className="text-center sm:text-start">
             <Link href="/" className="flex items-center gap-2 mb-4 sm:mb-6 justify-center sm:justify-start">
-              <Image
-                src="https://al-azab.co/w.png"
-                alt={language === "ar" ? "شعار شركة العزب للإنشاءات" : "Alazab Construction Company Logo"}
-                width={120}
-                height={40}
-                className="h-8 w-auto object-contain"
+              <img
+                src="/images/design-mode/logaz.gif"
+                alt={language === "ar" ? "شعار شركة العزب للإنشاءات" : "Al-Azab Construction Logo"}
+                className="h-8 w-auto"
               />
-              <span className="text-xl font-bold text-white whitespace-nowrap">
+              <span className="text-xl font-bold text-white">
                 {language === "ar" ? "العزب للإنشاءات" : "Al-Azab Construction"}
               </span>
             </Link>
             <p className="text-gray-400 mb-6 text-sm sm:text-base leading-relaxed px-2 sm:px-0">
               {language === "ar"
-                ? "شركة مقاولات وإدارة تنفيذ متخصصة في التصميم المعماري والتشطيبات وإدارة المشاريع. نركز على الجودة والسلامة وتسليم الأعمال في الوقت المحدد."
-                : "A construction and execution management firm specializing in architectural design, finishing, and project delivery. We focus on quality, safety, and on-time delivery."}
+                ? "شريكك الموثوق في حلول البناء المبتكرة. نبني التميز ونقدم الجودة منذ عام 2000."
+                : "Your trusted partner for innovative construction solutions. Building excellence and delivering quality since 2000."}
             </p>
-            <div className="text-gray-400 text-sm sm:text-base">
-              {language === "ar" ? "السجل التجاري: 1010-ALZB" : "Commercial Registration: 1010-ALZB"}
+            <div className="flex gap-4 justify-center sm:justify-start">
+              <Link href="#" className="text-gray-400 hover:text-yellow-500 transition-colors">
+                <Facebook className="h-5 w-5" />
+                <span className="sr-only">Facebook</span>
+              </Link>
+              <Link href="#" className="text-gray-400 hover:text-yellow-500 transition-colors">
+                <Twitter className="h-5 w-5" />
+                <span className="sr-only">Twitter</span>
+              </Link>
+              <Link href="#" className="text-gray-400 hover:text-yellow-500 transition-colors">
+                <Instagram className="h-5 w-5" />
+                <span className="sr-only">Instagram</span>
+              </Link>
+              <Link href="#" className="text-gray-400 hover:text-yellow-500 transition-colors">
+                <Linkedin className="h-5 w-5" />
+                <span className="sr-only">LinkedIn</span>
+              </Link>
             </div>
           </div>
 
@@ -83,34 +95,35 @@ export function Footer() {
             <ul className="space-y-2 sm:space-y-3">
               <li>
                 <Link
-                  href="/services"
+                  href="/services/luxury-finishing"
                   className="text-gray-400 text-sm sm:text-base hover:text-yellow-500 transition-colors inline-block"
                 >
-                  {language === "ar" ? "التصميم المعماري" : "Architectural Design"}
+                  {language === "ar" ? "التشطيبات الفاخرة" : "Luxury Finishing"}
                 </Link>
               </li>
               <li>
                 <Link
-                  href="/services"
+                  href="/services/brand-identity"
                   className="text-gray-400 text-sm sm:text-base hover:text-yellow-500 transition-colors inline-block"
                 >
-                  {language === "ar" ? "التصميم الداخلي" : "Interior Design"}
+                  {language === "ar" ? "الهوية التجارية" : "Brand Identity"}
                 </Link>
               </li>
               <li>
                 <Link
-                  href="/services"
-                  className="text-gray-400 text-sm sm:text-base hover:text-yellow-500 transition-colors inline-block"
+                  href="/uberfix"
+                  className="text-gray-400 text-sm sm:text-base hover:text-yellow-500 transition-colors inline-flex items-center gap-2"
                 >
-                  {language === "ar" ? "إدارة المشاريع" : "Project Management"}
+                  <Smartphone className="h-4 w-4" />
+                  {language === "ar" ? "UberFix - تطبيق الصيانات" : "UberFix - Maintenance App"}
                 </Link>
               </li>
               <li>
                 <Link
-                  href="/services"
+                  href="/services/general-supplies"
                   className="text-gray-400 text-sm sm:text-base hover:text-yellow-500 transition-colors inline-block"
                 >
-                  {language === "ar" ? "الصيانة وإدارة المرافق" : "Maintenance & Facilities"}
+                  {language === "ar" ? "التوريدات العامة" : "General Supplies"}
                 </Link>
               </li>
             </ul>
@@ -140,18 +153,18 @@ export function Footer() {
               </li>
               <li>
                 <Link
-                  href="/clients"
+                  href="/gallery"
                   className="text-gray-400 text-sm sm:text-base hover:text-yellow-500 transition-colors inline-block"
                 >
-                  {language === "ar" ? "عملاؤنا" : "Clients"}
+                  {language === "ar" ? "معرض الأعمال" : "Gallery"}
                 </Link>
               </li>
               <li>
                 <Link
-                  href="/services"
+                  href="/calculator"
                   className="text-gray-400 text-sm sm:text-base hover:text-yellow-500 transition-colors inline-block"
                 >
-                  {language === "ar" ? "خدماتنا" : "Our Services"}
+                  {language === "ar" ? "حاسبة التكلفة" : "Cost Calculator"}
                 </Link>
               </li>
               <li>
@@ -172,21 +185,21 @@ export function Footer() {
             </h3>
             <ul className="space-y-3 sm:space-y-4">
               <li className="flex items-start justify-center sm:justify-start gap-3">
-                <MapPin className="h-5 w-5 text-[var(--color-primary)] mt-1 flex-shrink-0" />
+                <MapPin className="h-5 w-5 text-yellow-500 mt-1 flex-shrink-0" />
                 <span className="text-gray-400 text-sm sm:text-base break-words">
-                  {language === "ar" ? "شارع المعادي 500/8، القاهرة، مصر" : "8/500 Maadi Street, Cairo, Egypt"}
+                  {language === "ar" ? "8/500 شارع المعادي، القاهرة، مصر" : "8/500st Maadi, Cairo, Egypt"}
                 </span>
               </li>
               <li className="flex items-start justify-center sm:justify-start gap-3">
-                <Phone className="h-5 w-5 text-[var(--color-primary)] mt-1 flex-shrink-0" />
+                <Phone className="h-5 w-5 text-yellow-500 mt-1 flex-shrink-0" />
                 <span className="text-gray-400 text-sm sm:text-base">+201004006620</span>
               </li>
               <li className="flex items-start justify-center sm:justify-start gap-3">
-                <Phone className="h-5 w-5 text-[var(--color-primary)] mt-1 flex-shrink-0" />
+                <Phone className="h-5 w-5 text-yellow-500 mt-1 flex-shrink-0" />
                 <span className="text-gray-400 text-sm sm:text-base">+201014536600</span>
               </li>
               <li className="flex items-start justify-center sm:justify-start gap-3">
-                <Mail className="h-5 w-5 text-[var(--color-primary)] mt-1 flex-shrink-0" />
+                <Mail className="h-5 w-5 text-yellow-500 mt-1 flex-shrink-0" />
                 <span className="text-gray-400 text-sm sm:text-base break-all">info@al-azab.co</span>
               </li>
             </ul>

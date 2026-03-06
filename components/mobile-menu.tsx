@@ -2,9 +2,8 @@
 
 import { useEffect, useRef } from "react"
 import Link from "next/link"
-import Image from "next/image"
 import { usePathname } from "next/navigation"
-import { ChevronRight, X } from "lucide-react"
+import { HardHat, ChevronRight, X } from "lucide-react"
 import { motion, AnimatePresence } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { AnimatedButton } from "@/components/ui/animated-button"
@@ -86,24 +85,23 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
               <div
                 className={`flex items-center justify-between border-b py-3 sm:py-4 ${language === "ar" ? "flex-row-reverse" : ""}`}
               >
-                <Link href="/" className="flex items-center gap-2" onClick={onClose}>
-                  <Image
-                    src="https://al-azab.co/logo/logo-b.png"
-                    alt="Alazab Construction Company"
-                    width={48}
-                    height={48}
-                    className="h-10 w-10 object-contain"
-                  />
+                <Link href="/" className="flex items-center gap-1.5 sm:gap-2" onClick={onClose}>
+                  <motion.div
+                    initial={{ rotate: -10, scale: 0.9 }}
+                    animate={{ rotate: 0, scale: 1 }}
+                    transition={{ type: "spring", stiffness: 400, damping: 15, delay: 0.1 }}
+                    className="bg-amber-500 text-white p-1 sm:p-1.5 rounded-md"
+                  >
+                    <HardHat className="h-4 w-4 sm:h-5 sm:w-5" />
+                  </motion.div>
                   <motion.div
                     initial={{ x: -10, opacity: 0 }}
                     animate={{ x: 0, opacity: 1 }}
                     transition={{ type: "spring", stiffness: 300, damping: 20, delay: 0.2 }}
                     className="flex flex-col"
                   >
-                    <span className="text-base sm:text-lg font-bold">Alazab Construction</span>
-                    <span className="text-[10px] sm:text-xs text-muted-foreground">
-                      {language === "ar" ? "هندسة وتنفيذ بمعايير عالية" : "Engineering & Execution Excellence"}
-                    </span>
+                    <span className="text-base sm:text-lg font-bold">{t("hero.badge")}</span>
+                    <span className="text-[10px] sm:text-xs text-muted-foreground">{t("hero.subtitle")}</span>
                   </motion.div>
                 </Link>
                 <Button
@@ -127,13 +125,58 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                   delay={0.1}
                 />
 
-                <MobileNavItem
-                  href="/services"
-                  label={t("nav.services")}
-                  isActive={pathname === "/services"}
-                  onClick={onClose}
-                  delay={0.2}
-                />
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{
+                    type: "spring",
+                    stiffness: 300,
+                    damping: 20,
+                    delay: 0.2,
+                    mass: 0.8,
+                  }}
+                  className="space-y-4"
+                >
+                  <motion.p
+                    initial={{ opacity: 0, y: -5 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.3 }}
+                    className="text-lg font-medium text-center"
+                  >
+                    {t("nav.services")}
+                  </motion.p>
+                  <motion.div
+                    className="space-y-3"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.4, staggerChildren: 0.1 }}
+                  >
+                    <MobileSubNavItem
+                      href="/services/luxury-finishing"
+                      label={t("nav.services.luxury")}
+                      isActive={pathname === "/services/luxury-finishing"}
+                      onClick={onClose}
+                    />
+                    <MobileSubNavItem
+                      href="/services/brand-identity"
+                      label={t("nav.services.brand")}
+                      isActive={pathname === "/services/brand-identity"}
+                      onClick={onClose}
+                    />
+                    <MobileSubNavItem
+                      href="/services/maintenance-renovations"
+                      label={t("nav.services.maintenance")}
+                      isActive={pathname === "/services/maintenance-renovations"}
+                      onClick={onClose}
+                    />
+                    <MobileSubNavItem
+                      href="/services/general-supplies"
+                      label={t("nav.services.supplies")}
+                      isActive={pathname === "/services/general-supplies"}
+                      onClick={onClose}
+                    />
+                  </motion.div>
+                </motion.div>
 
                 <MobileNavItem
                   href="/projects"
@@ -144,17 +187,17 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                 />
 
                 <MobileNavItem
-                  href="/about"
-                  label={t("nav.about")}
-                  isActive={pathname === "/about"}
+                  href="/gallery"
+                  label={t("nav.gallery")}
+                  isActive={pathname === "/gallery"}
                   onClick={onClose}
                   delay={0.35}
                 />
 
                 <MobileNavItem
-                  href="/clients"
-                  label={t("nav.clients")}
-                  isActive={pathname === "/clients"}
+                  href="/about"
+                  label={t("nav.about")}
+                  isActive={pathname === "/about"}
                   onClick={onClose}
                   delay={0.4}
                 />
@@ -164,7 +207,7 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                   label={t("nav.contact")}
                   isActive={pathname === "/contact"}
                   onClick={onClose}
-                  delay={0.45}
+                  delay={0.5}
                 />
               </nav>
 
@@ -187,7 +230,7 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                     transition={{ type: "spring", stiffness: 400, damping: 15 }}
                   >
                     <AnimatedButton
-                      className="w-full bg-[var(--color-primary)] hover:bg-[var(--color-primary-alt)] text-[var(--color-deep)] font-medium text-sm sm:text-base transition-all duration-300 py-5 sm:py-6"
+                      className="w-full bg-amber-500 hover:bg-amber-600 text-white font-medium text-sm sm:text-base transition-all duration-300 py-5 sm:py-6"
                       hoverEffect="shine"
                       iconAnimation={true}
                     >
@@ -230,13 +273,57 @@ function MobileNavItem({
         delay: delay,
         mass: 0.8,
       }}
-      whileHover={{ scale: 1.02, backgroundColor: "rgba(245, 191, 35, 0.08)" }}
+      whileHover={{ scale: 1.02, backgroundColor: "rgba(245, 158, 11, 0.05)" }}
       className="overflow-hidden rounded-lg"
     >
       <Link
         href={href}
         className={`text-base sm:text-lg font-medium block text-center py-2 sm:py-3 px-3 sm:px-4 rounded-lg transition-all duration-300 ${
-          isActive ? "text-[var(--color-primary)] bg-[color:rgba(245,191,35,0.12)]" : ""
+          isActive ? "text-amber-500 bg-amber-50 dark:bg-amber-900/20" : ""
+        }`}
+        onClick={onClick}
+      >
+        <motion.span
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          transition={{ type: "spring", stiffness: 400, damping: 15 }}
+          className="inline-block"
+        >
+          {label}
+        </motion.span>
+      </Link>
+    </motion.div>
+  )
+}
+
+// Mobile Sub Nav Item
+function MobileSubNavItem({
+  href,
+  label,
+  isActive,
+  onClick,
+}: {
+  href: string
+  label: string
+  isActive: boolean
+  onClick: () => void
+}) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, x: -10 }}
+      animate={{ opacity: 1, x: 0 }}
+      transition={{ type: "spring", stiffness: 300, damping: 20 }}
+      whileHover={{
+        scale: 1.02,
+        backgroundColor: "rgba(245, 158, 11, 0.05)",
+        transition: { type: "spring", stiffness: 400, damping: 15 },
+      }}
+      className="overflow-hidden rounded-lg"
+    >
+      <Link
+        href={href}
+        className={`block text-sm sm:text-base py-2 sm:py-2.5 px-3 sm:px-4 rounded-lg transition-all duration-300 text-center ${
+          isActive ? "text-amber-500 bg-amber-50 dark:bg-amber-900/20" : ""
         }`}
         onClick={onClick}
       >
