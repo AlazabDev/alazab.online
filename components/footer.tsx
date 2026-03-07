@@ -80,6 +80,46 @@ export function Footer() {
               </li>
               <li>
                 <Link
+                  href="/refund-policy"
+                  className="text-gray-400 text-sm sm:text-base hover:text-yellow-500 transition-colors inline-block"
+                >
+                  {language === "ar" ? "سياسة الاسترجاع" : "Refund Policy"}
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/acceptable-use-policy"
+                  className="text-gray-400 text-sm sm:text-base hover:text-yellow-500 transition-colors inline-block"
+                >
+                  {language === "ar" ? "سياسة الاستخدام" : "Acceptable Use"}
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/disclaimer"
+                  className="text-gray-400 text-sm sm:text-base hover:text-yellow-500 transition-colors inline-block"
+                >
+                  {language === "ar" ? "إخلاء المسؤولية" : "Disclaimer"}
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/responsible-disclosure"
+                  className="text-gray-400 text-sm sm:text-base hover:text-yellow-500 transition-colors inline-block"
+                >
+                  {language === "ar" ? "الأمان" : "Security"}
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/data-deletion"
+                  className="text-gray-400 text-sm sm:text-base hover:text-yellow-500 transition-colors inline-block"
+                >
+                  {language === "ar" ? "حذف البيانات" : "Delete My Data"}
+                </Link>
+              </li>
+              <li>
+                <Link
                   href="/legal"
                   className="text-gray-400 text-sm sm:text-base hover:text-yellow-500 transition-colors inline-block"
                 >
