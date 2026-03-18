@@ -1,14 +1,26 @@
 export const metadata = {
-  title: "شركة العزب للمقاولات | Alazab Construction Company",
+  title: "مجموعة العزب للإنشاءات | Alazab Construction Group - أربع شركات متخصصة",
   description:
-    "شركة العزب للمقاولات وإدارة التنفيذ. نقدم خدمات التصميم المعماري والتصميم الداخلي وإدارة المشاريع والصيانة وفق معايير عالية.",
-  keywords: "شركة العزب, مقاولات, تصميم معماري, تصميم داخلي, إدارة مشاريع, صيانة, القاهرة, مصر",
+    "مجموعة العزب - أربع شركات متخصصة: التشطيبات الفاخرة، الهوية التجارية، الصيانة الشاملة، والتوريدات. حلول متكاملة لبناء وتطوير أحلامك.",
+  keywords: "العزب, مقاولات, تشطيبات فاخرة, هوية تجارية, صيانة, توريدات, البناء, الرياض, السعودية",
+  authors: [{ name: "Alazab Construction Group" }],
   openGraph: {
-    title: "شركة العزب للمقاولات | Alazab Construction Company",
-    description: "خدمات التصميم والتنفيذ وإدارة المشاريع من شركة العزب.",
-    url: process.env.NEXT_PUBLIC_SITE_URL || "https://al-azab.com",
-    images: ["/logo.png"],
+    title: "مجموعة العزب | أربع شركات متخصصة تحت سقف واحد",
+    description: "التشطيبات الفاخرة، الهوية التجارية، الصيانة الشاملة، والتوريدات. كل ما تحتاجه في شركة واحدة.",
+    url: process.env.NEXT_PUBLIC_SITE_URL || "https://alazab.com",
+    images: ["/hero-banner.jpg"],
     type: "website",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
   },
 }
 
