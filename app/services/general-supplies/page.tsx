@@ -36,13 +36,13 @@ export default function GeneralSuppliesPage() {
             </div>
             <h1 className="text-4xl md:text-6xl font-bold text-white mb-6 leading-tight">
               {language === "ar"
-                ? "نوفر حلول التوريد الكاملة لجميع احتياجات مشروعك من البداية إلى النهاية"
-                : "We offer full supply solutions for all your project needs, from start to finish"}
+                ? "توريدات متكاملة لكل احتياجات مشروعك"
+                : "Comprehensive Supplies for All Your Project Needs"}
             </h1>
             <p className="text-xl md:text-2xl text-white/90 max-w-3xl mx-auto leading-relaxed">
               {language === "ar"
-                ? "شريكك الموثوق في توريد جميع مواد البناء والمعدات بأعلى معايير الجودة وفي الوقت المحدد"
-                : "Your trusted partner in supplying all construction materials and equipment with the highest quality standards and on time"}
+                ? "نحن شريكك الموثوق في توفير جميع مواد البناء والمعدات بأعلى جودة وأسعار منافسة مع ضمان التسليم في الموعد المحدد"
+                : "Your reliable partner for supplying all construction materials and equipment with premium quality, competitive prices, and guaranteed on-time delivery"}
             </p>
           </motion.div>
         </div>
@@ -281,7 +281,7 @@ export default function GeneralSuppliesPage() {
             className="text-center mb-16 max-w-3xl mx-auto"
           >
             <div className="inline-block px-4 py-2 bg-blue-500/20 text-blue-300 rounded-full text-sm font-medium mb-4">
-              {language === "ar" ? "معرض أعمالنا" : "Our Portfolio"}
+              {language === "ar" ? "معرض أعمال��ا" : "Our Portfolio"}
             </div>
             <h2 className="text-4xl font-bold mb-6 text-white">
               {language === "ar" ? "مشاريع التوريد المميزة" : "Featured Supply Projects"}
