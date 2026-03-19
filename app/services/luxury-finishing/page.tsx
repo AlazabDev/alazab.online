@@ -36,13 +36,13 @@ export default function LuxuryFinishingPage() {
             </div>
             <h1 className="text-4xl md:text-6xl font-bold text-white mb-6 leading-tight">
               {language === "ar"
-                ? "حلول التشطيب الفاخرة التي تحول مساحاتك إلى تحف فنية أنيقة"
-                : "High-end finishing solutions that turn your spaces into elegant masterpieces"}
+                ? "تشطيبات فاخرة تعكس فخامة ذوقك"
+                : "Luxury Finishing That Reflects Your Elegance"}
             </h1>
             <p className="text-xl md:text-2xl text-white/90 max-w-3xl mx-auto leading-relaxed">
               {language === "ar"
-                ? "نقدم أرقى خدمات التشطيب والديكور بمواد عالية الجودة وتصاميم استثنائية تعكس ذوقك الرفيع"
-                : "We provide the finest finishing and decoration services with high-quality materials and exceptional designs that reflect your refined taste"}
+                ? "نحن نتخصص في تحويل مساحاتك إلى قصور من الجمال من خلال أرقى المواد والتقنيات الحديثة والتصاميم المستوحاة من أحدث الاتجاهات العالمية"
+                : "We specialize in transforming your spaces into havens of beauty through premium materials, modern techniques, and designs inspired by the latest global trends"}
             </p>
           </motion.div>
         </div>

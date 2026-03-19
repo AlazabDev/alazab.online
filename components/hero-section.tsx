@@ -14,21 +14,21 @@ export function HeroSection() {
   const heroContent = {
     ar: {
       label: "مجموعة العزب للإنشاءات",
-      title: "أربع شركات متخصصة",
-      highlight: "تحت سقف واحد",
+      title: "تحويل الأحلام إلى واقع معماري",
+      highlight: "بخبرة تمتد لأكثر من 15 سنة",
       description:
-        "استثنائية التشطيب السكني • احترافية تجهيز المحلات • تكامل إدارة المرافق • توريد المستحيل",
-      primaryCta: "ابدأ معنا",
-      secondaryCta: "شاهد الفيديو",
+        "نقدم حلولاً متكاملة في التشطيبات الفاخرة والهوية التجارية والصيانة الشاملة والتوريدات • كل ما تحتاجه في شركة واحدة موثوقة",
+      primaryCta: "استشرنا اليوم",
+      secondaryCta: "تصفح الخدمات",
     },
     en: {
       label: "Alazab Construction Group",
-      title: "Four Specialized Companies",
-      highlight: "Under One Roof",
+      title: "Transforming Dreams Into Architectural Reality",
+      highlight: "With over 15 years of expertise",
       description:
-        "Exceptional Finishing • Professional Commercial Setup • Integrated Management • Complete Solutions",
-      primaryCta: "Get Started",
-      secondaryCta: "Watch Video",
+        "We provide integrated solutions in luxury finishing, brand identity, comprehensive maintenance, and supplies • Everything you need in one trusted company",
+      primaryCta: "Consult Now",
+      secondaryCta: "Browse Services",
     },
   }
 
