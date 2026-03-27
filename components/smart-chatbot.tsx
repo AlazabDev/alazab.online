@@ -4,17 +4,30 @@ import type React from "react"
 
 import { useState, useRef, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { MessageCircle, X, Send, Bot, User } from "lucide-react"
+import { MessageCircle, X, Send, Bot, User, ArrowRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { useLanguage } from "@/contexts/language-context"
+import { submitMaintenanceRequest, queryMaintenanceByNumber, queryMaintenanceByPhone, serviceTypeLabels, priorityLabels } from "@/lib/maintenance-api"
 
 interface Message {
   id: string
   text: string
   sender: "user" | "bot"
   timestamp: Date
+}
+
+type MaintenanceStep = "initial" | "name" | "phone" | "service" | "description" | "priority" | "submitting" | "success" | "tracking"
+
+interface MaintenanceFormData {
+  name: string
+  phone: string
+  service: "plumbing" | "electrical" | "ac" | "painting" | "carpentry" | "general" | ""
+  description: string
+  priority: "low" | "medium" | "high" | ""
+  requestNumber?: string
+  requestStatus?: string
 }
 
 const predefinedResponses = {
@@ -50,6 +63,14 @@ export function SmartChatbot() {
   const [messages, setMessages] = useState<Message[]>([])
   const [inputValue, setInputValue] = useState("")
   const [isTyping, setIsTyping] = useState(false)
+  const [maintenanceStep, setMaintenanceStep] = useState<MaintenanceStep | null>(null)
+  const [maintenanceForm, setMaintenanceForm] = useState<MaintenanceFormData>({
+    name: "",
+    phone: "",
+    service: "",
+    description: "",
+    priority: "",
+  })
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
 
@@ -92,9 +113,6 @@ export function SmartChatbot() {
     if (message.includes("مشروع") || message.includes("مشاريع") || message.includes("project")) {
       return responses.projects
     }
-    if (message.includes("صيانة") || message.includes("maintenance") || message.includes("repair")) {
-      return responses.maintenance
-    }
     if (
       message.includes("مرحبا") ||
       message.includes("السلام") ||
@@ -105,6 +123,223 @@ export function SmartChatbot() {
     }
 
     return responses.default
+  }
+
+  const isMaintenanceRequest = (userMessage: string): boolean => {
+    const message = userMessage.toLowerCase()
+    const maintenanceKeywords = [
+      "صيانة",
+      "تصليح",
+      "إصلاح",
+      "خلل",
+      "عطل",
+      "مشكلة",
+      "maintenance",
+      "repair",
+      "fix",
+      "plumbing",
+      "electrical",
+      "سباكة",
+      "كهربائية",
+      "تكييف",
+      "دهان",
+      "painting",
+      "carpentry",
+      "نجارة",
+    ]
+    return maintenanceKeywords.some((keyword) => message.includes(keyword))
+  }
+
+  const handleMaintenanceRequest = (userMessage: string) => {
+    if (!maintenanceStep) {
+      // Check if user is requesting maintenance
+      if (isMaintenanceRequest(userMessage)) {
+        setMaintenanceStep("name")
+        const botMsg: Message = {
+          id: (Date.now() + 1).toString(),
+          text:
+            language === "ar"
+              ? "شكراً لك! سأساعدك في تقديم طلب صيانة. أولاً، ما اسمك الكامل؟"
+              : "Thank you! I'll help you submit a maintenance request. First, what's your full name?",
+          sender: "bot",
+          timestamp: new Date(),
+        }
+        setMessages((prev) => [...prev, botMsg])
+        return true
+      }
+    } else {
+      // Handle form steps
+      switch (maintenanceStep) {
+        case "name":
+          setMaintenanceForm({ ...maintenanceForm, name: userMessage })
+          setMaintenanceStep("phone")
+          const phoneMsg: Message = {
+            id: (Date.now() + 1).toString(),
+            text:
+              language === "ar"
+                ? "شكراً! الآن، ما رقم هاتفك؟"
+                : "Thanks! Now, what's your phone number?",
+            sender: "bot",
+            timestamp: new Date(),
+          }
+          setMessages((prev) => [...prev, phoneMsg])
+          return true
+
+        case "phone":
+          setMaintenanceForm({ ...maintenanceForm, phone: userMessage })
+          setMaintenanceStep("service")
+          const serviceMsg: Message = {
+            id: (Date.now() + 1).toString(),
+            text:
+              language === "ar"
+                ? "ما نوع الخدمة التي تحتاجها؟ (سباكة، كهربائية، تكييف، دهان، نجارة، أو صيانة عامة)"
+                : "What type of service do you need? (Plumbing, Electrical, AC, Painting, Carpentry, or General Maintenance)",
+            sender: "bot",
+            timestamp: new Date(),
+          }
+          setMessages((prev) => [...prev, serviceMsg])
+          return true
+
+        case "service":
+          const selectedService = getServiceType(userMessage)
+          if (selectedService) {
+            setMaintenanceForm({ ...maintenanceForm, service: selectedService })
+            setMaintenanceStep("description")
+            const descMsg: Message = {
+              id: (Date.now() + 1).toString(),
+              text:
+                language === "ar"
+                  ? "الآن، يرجى وصف المشكلة أو الخدمة التي تحتاجها:"
+                  : "Now, please describe the problem or service you need:",
+              sender: "bot",
+              timestamp: new Date(),
+            }
+            setMessages((prev) => [...prev, descMsg])
+            return true
+          }
+          return false
+
+        case "description":
+          setMaintenanceForm({ ...maintenanceForm, description: userMessage })
+          setMaintenanceStep("priority")
+          const priorityMsg: Message = {
+            id: (Date.now() + 1).toString(),
+            text:
+              language === "ar"
+                ? "ما مستوى الأولوية؟ (منخفض، متوسط، أو عالي)"
+                : "What's the priority level? (Low, Medium, or High)",
+            sender: "bot",
+            timestamp: new Date(),
+          }
+          setMessages((prev) => [...prev, priorityMsg])
+          return true
+
+        case "priority":
+          const selectedPriority = getPriorityLevel(userMessage)
+          if (selectedPriority) {
+            setMaintenanceForm({ ...maintenanceForm, priority: selectedPriority })
+            setMaintenanceStep("submitting")
+            submitRequest(userMessage)
+            return true
+          }
+          return false
+      }
+    }
+    return false
+  }
+
+  const getServiceType = (input: string): MaintenanceFormData["service"] | null => {
+    const lowerInput = input.toLowerCase()
+    if (lowerInput.includes("سباكة") || lowerInput.includes("plumbing")) return "plumbing"
+    if (lowerInput.includes("كهربائية") || lowerInput.includes("electrical")) return "electrical"
+    if (lowerInput.includes("تكييف") || lowerInput.includes("ac") || lowerInput.includes("air")) return "ac"
+    if (lowerInput.includes("دهان") || lowerInput.includes("painting")) return "painting"
+    if (lowerInput.includes("نجارة") || lowerInput.includes("carpentry")) return "carpentry"
+    if (lowerInput.includes("عام") || lowerInput.includes("general")) return "general"
+    return null
+  }
+
+  const getPriorityLevel = (input: string): MaintenanceFormData["priority"] | null => {
+    const lowerInput = input.toLowerCase()
+    if (lowerInput.includes("منخفض") || lowerInput.includes("low")) return "low"
+    if (lowerInput.includes("متوسط") || lowerInput.includes("medium")) return "medium"
+    if (lowerInput.includes("عالي") || lowerInput.includes("high")) return "high"
+    return null
+  }
+
+  const submitRequest = async (priorityInput: string) => {
+    const selectedPriority = getPriorityLevel(priorityInput)
+    if (!selectedPriority || !maintenanceForm.service) return
+
+    const finalForm = { ...maintenanceForm, priority: selectedPriority }
+
+    const botMsg: Message = {
+      id: (Date.now() + 1).toString(),
+      text:
+        language === "ar"
+          ? "جاري إرسال طلبك الآن..."
+          : "Submitting your request now...",
+      sender: "bot",
+      timestamp: new Date(),
+    }
+    setMessages((prev) => [...prev, botMsg])
+
+    try {
+      const response = await submitMaintenanceRequest({
+        customerName: finalForm.name,
+        customerPhone: finalForm.phone,
+        serviceType: finalForm.service,
+        description: finalForm.description,
+        priority: finalForm.priority,
+      })
+
+      if (response.success && response.requestNumber) {
+        setMaintenanceForm({ ...finalForm, requestNumber: response.requestNumber })
+        setMaintenanceStep("success")
+
+        const successMsg: Message = {
+          id: (Date.now() + 2).toString(),
+          text:
+            language === "ar"
+              ? `✅ تم استلام طلبك بنجاح!\n\nرقم الطلب: ${response.requestNumber}\n\nسيتواصل معك فريقنا قريباً لتأكيد تفاصيل الخدمة.`
+              : `✅ Your request has been received successfully!\n\nRequest Number: ${response.requestNumber}\n\nOur team will contact you shortly to confirm the service details.`,
+          sender: "bot",
+          timestamp: new Date(),
+        }
+        setMessages((prev) => [...prev, successMsg])
+      } else {
+        const errorMsg: Message = {
+          id: (Date.now() + 2).toString(),
+          text:
+            language === "ar"
+              ? `حدث خطأ: ${response.error}`
+              : `Error: ${response.error}`,
+          sender: "bot",
+          timestamp: new Date(),
+        }
+        setMessages((prev) => [...prev, errorMsg])
+        setMaintenanceStep(null)
+        setMaintenanceForm({
+          name: "",
+          phone: "",
+          service: "",
+          description: "",
+          priority: "",
+        })
+      }
+    } catch (error) {
+      const errorMsg: Message = {
+        id: (Date.now() + 2).toString(),
+        text:
+          language === "ar"
+            ? "حدث خطأ في الاتصال. يرجى محاولة لاحقاً."
+            : "Connection error. Please try again later.",
+        sender: "bot",
+        timestamp: new Date(),
+      }
+      setMessages((prev) => [...prev, errorMsg])
+      setMaintenanceStep(null)
+    }
   }
 
   const handleSendMessage = async () => {
@@ -118,15 +353,24 @@ export function SmartChatbot() {
     }
 
     setMessages((prev) => [...prev, userMessage])
+    const inputMsg = inputValue
     setInputValue("")
     setIsTyping(true)
 
-    // Simulate typing delay
+    // Check if this is a maintenance request
+    if (maintenanceStep !== null || isMaintenanceRequest(inputMsg)) {
+      if (handleMaintenanceRequest(inputMsg)) {
+        setIsTyping(false)
+        return
+      }
+    }
+
+    // Simulate typing delay for regular responses
     setTimeout(
       () => {
         const botResponse: Message = {
           id: (Date.now() + 1).toString(),
-          text: getResponse(inputValue),
+          text: getResponse(inputMsg),
           sender: "bot",
           timestamp: new Date(),
         }
