@@ -227,6 +227,49 @@ export const PROJECTS = [
       "Phase 1 and 2 delivery within 10 months",
     ],
   },
+  {
+    id: "retail-interiors-portfolio",
+    titleAr: "مشاريع التصميم الداخلي للمتاجر",
+    titleEn: "Retail Interior Design Collection",
+    descriptionAr:
+      "مجموعة شاملة من مشاريع التصميم الداخلي للمتاجر والأماكن التجارية، تجمع بين الأناقة والعملية لخلق تجارب تسوق استثنائية من خلال التصميم الذكي والتشطيبات المتقنة.",
+    descriptionEn:
+      "A comprehensive collection of retail interior design projects showcasing elegant and functional commercial spaces that create exceptional shopping experiences through smart design and expert finishing.",
+    locationAr: "مصر",
+    locationEn: "Egypt",
+    category: "retail",
+    duration: "جارية",
+    durationEn: "Ongoing",
+    teamSize: 15,
+    completionDate: "2024-12-31",
+    clientAr: "عملاء متعددون",
+    clientEn: "Multiple Clients",
+    budgetAr: "متغير حسب المشروع",
+    budgetEn: "Variable per project",
+    area: "متعدد",
+    areaEn: "Multiple",
+    heroImage:
+      "https://objectstorage.me-jeddah-1.oraclecloud.com/n/axwmiwn72of7/b/alazab-media/o/retail-interiors/retail-interiors-002.jpg",
+    gallery: [
+      "https://objectstorage.me-jeddah-1.oraclecloud.com/n/axwmiwn72of7/b/alazab-media/o/retail-interiors/retail-interiors-002.jpg",
+      "https://objectstorage.me-jeddah-1.oraclecloud.com/n/axwmiwn72of7/b/alazab-media/o/retail-interiors/retail-interiors-010.jpg",
+      "https://objectstorage.me-jeddah-1.oraclecloud.com/n/axwmiwn72of7/b/alazab-media/o/retail-interiors/retail-interiors-020.jpg",
+      "https://objectstorage.me-jeddah-1.oraclecloud.com/n/axwmiwn72of7/b/alazab-media/o/retail-interiors/retail-interiors-050.jpg",
+      "https://objectstorage.me-jeddah-1.oraclecloud.com/n/axwmiwn72of7/b/alazab-media/o/retail-interiors/retail-interiors-100.jpg",
+    ],
+    highlightsAr: [
+      "تصميم تجارب تسوق استثنائية تعزز المبيعات",
+      "دراسات تدفق الحركة وتحسين عرض المنتجات",
+      "أنظمة إضاءة متقدمة لتسليط الضوء على العلامات التجارية",
+      "تشطيبات متينة وعملية للاستخدام الكثيف",
+    ],
+    highlightsEn: [
+      "Exceptional shopping experience design that boosts sales",
+      "Flow studies and product display optimization",
+      "Advanced lighting systems to highlight brands",
+      "Durable and practical finishes for high-traffic use",
+    ],
+  },
 ]
 
 export const PROJECT_CATEGORIES = [
@@ -249,5 +292,10 @@ export const PROJECT_CATEGORIES = [
     id: "maintenance",
     labelAr: "الصيانة وإدارة المرافق",
     labelEn: "Maintenance & Facilities",
+  },
+  {
+    id: "retail",
+    labelAr: "التصميم الداخلي للمتاجر",
+    labelEn: "Retail Interior Design",
   },
 ]
