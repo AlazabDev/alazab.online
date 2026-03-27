@@ -1,5 +1,6 @@
 import fs from "fs"
 import path from "path"
+import { RETAIL_INTERIORS } from "./data/retail-interiors"
 
 export interface GalleryImage {
   id: string
@@ -62,5 +63,19 @@ export const getGalleryImages = (): GalleryImage[] => {
   const galleryImages = fs.existsSync(galleryDir) ? collectImages(galleryDir, "gallery") : []
   const projectImages = fs.existsSync(projectsDir) ? collectImages(projectsDir, "projects") : []
 
-  return [...galleryImages, ...projectImages]
+  // Convert retail interiors to gallery format
+  const retailInteriorImages: GalleryImage[] = []
+  RETAIL_INTERIORS.forEach((project) => {
+    project.images.forEach((img, index) => {
+      retailInteriorImages.push({
+        id: `retail-interiors-${index}`,
+        src: img,
+        category: "retail-interiors",
+        type: "retail-design",
+        title: `Retail Interior Design ${index + 1}`,
+      })
+    })
+  })
+
+  return [...galleryImages, ...projectImages, ...retailInteriorImages]
 }

@@ -10,6 +10,7 @@ import type { GalleryImage } from "@/lib/gallery-data"
 const CATEGORY_LABELS: Record<string, { nameEn: string; nameAr: string }> = {
   gallery: { nameEn: "Gallery Collection", nameAr: "مجموعة الصور" },
   projects: { nameEn: "Projects Portfolio", nameAr: "معرض المشاريع" },
+  "retail-interiors": { nameEn: "Retail Interior Design", nameAr: "التصميم الداخلي للمتاجر" },
 }
 
 const layoutOptions = [
