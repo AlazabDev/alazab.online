@@ -1,20 +1,28 @@
 @import "tailwindcss";
 @import "tw-animate-css";
+@import "./hero-animations.css";
 
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  /* Brand Palette */
+  /* Premium Brand Palette */
   --color-primary: #f5bf23; /* saffron */
   --color-primary-alt: #ffb900; /* selective yellow */
+  --color-primary-light: #ffd966; /* light yellow */
   --color-black: #0c0c0c; /* cod gray */
-  --color-dark: #3d3d3d; /* mine shaft */
+  --color-dark: #1a1a1a; /* dark premium */
   --color-gray: #b2b2b3; /* bombay */
   --color-light: #d1d2d3; /* iron */
   --color-deep: #030332; /* black rock */
+  --color-deep-premium: #0a0a1a; /* premium deep */
   --color-success: #0cc544; /* malachite */
   --color-info: #0909d8; /* dark blue */
   --color-danger: #f03925; /* pomegranate */
+  
+  /* Premium Accents */
+  --color-gold-accent: #d4af37;
+  --color-platinum: #e8e8e8;
+  --color-slate: #2c2c2c;
 
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);

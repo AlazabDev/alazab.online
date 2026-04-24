@@ -167,7 +167,7 @@ export default function UberFixPage() {
               >
                 <Wrench className="w-4 h-4 text-yellow-400" />
                 <span className="text-yellow-400 text-sm font-medium">
-                  {isRTL ? "تطبيق الصيانات الأول في مصر" : "Egypt's #1 Maintenance App"}
+                  {isRTL ? "حل الصيانة الذكي الموثوق" : "Smart Maintenance Solution"}
                 </span>
               </motion.div>
 
@@ -185,13 +185,13 @@ export default function UberFixPage() {
               </motion.div>
 
               <h2 className="text-2xl md:text-3xl font-bold text-gray-200 mb-6">
-                {isRTL ? "كل خدمات الصيانة في تطبيق واحد" : "All Maintenance Services in One App"}
+                {isRTL ? "صيانة شاملة متكاملة عند طلب واحد" : "Complete Integrated Maintenance at One Click"}
               </h2>
 
               <p className="text-lg text-gray-400 mb-8 max-w-xl">
                 {isRTL
-                  ? "احجز فني متخصص في دقائق. سباكة، كهرباء، تكييف، نجارة وأكثر. خدمة موثوقة بأسعار شفافة."
-                  : "Book a specialized technician in minutes. Plumbing, electrical, HVAC, carpentry and more. Reliable service with transparent pricing."}
+                  ? "احجز فنياً معتمداً في دقائق لأي خدمة صيانة. سباكة • كهرباء • تكييف • نجارة • دهانات وأكثر. ضمان الجودة وأسعار عادلة."
+                  : "Book certified technicians in minutes for any maintenance need. Plumbing • Electrical • HVAC • Carpentry • Painting and more. Quality guaranteed with fair pricing."}
               </p>
 
               {/* CTA Buttons */}
@@ -378,7 +378,7 @@ export default function UberFixPage() {
             <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">{isRTL ? "خدماتنا" : "Our Services"}</h2>
             <p className="text-gray-400 max-w-2xl mx-auto">
               {isRTL
-                ? "مجموعة شاملة من خدمات الصيانة المنزلية تحت سقف واحد"
+                ? "مجموعة شاملة من خدمات الصيانة ا��منزلية تحت سقف واحد"
                 : "A comprehensive range of home maintenance services under one roof"}
             </p>
           </motion.div>
