@@ -36,13 +36,13 @@ export default function BrandIdentityPage() {
             </div>
             <h1 className="text-4xl md:text-6xl font-bold text-white mb-6 leading-tight">
               {language === "ar"
-                ? "بناء هويات تجارية قوية من خلال التصميم"
-                : "Building Strong Brand Identities Through Design"}
+                ? "ننشئ مساحات تعكس هوية علامتك التجارية وتترك انطباعاً دائماً"
+                : "We create spaces that reflect your brand image and make a lasting impression"}
             </h1>
             <p className="text-xl md:text-2xl text-white/90 max-w-3xl mx-auto leading-relaxed">
               {language === "ar"
-                ? "ننقل رؤيتك إلى حقيقة ملموسة - من المحلات التجارية الحديثة إلى المكاتب التنفيذية الفخمة التي تعكس قيم شركتك وتجذب عملاءك"
-                : "We bring your vision to life - from modern retail spaces to elegant executive offices that reflect your company values and attract your customers"}
+                ? "نحول رؤية علامتك التجارية إلى مساحات حقيقية تحكي قصتك وتعزز هويتك في كل تفصيل"
+                : "We transform your brand vision into real spaces that tell your story and strengthen your identity in every detail"}
             </p>
           </motion.div>
         </div>
