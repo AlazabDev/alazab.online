@@ -19,9 +19,6 @@ export const metadata = {
   authors: [{ name: "AL-AZAB Construction" }],
   creator: "AL-AZAB Construction",
   publisher: "AL-AZAB Construction",
-  verification: {
-    google: "pvNhLPdBsSa76kHsNqamfKMee4kXYv7-tcoi30lHdHw",
-  },
   formatDetection: {
     email: false,
     address: false,
