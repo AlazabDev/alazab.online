@@ -4,91 +4,91 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  /* Brand Palette */
-  --color-primary: #f5bf23; /* saffron */
-  --color-primary-alt: #ffb900; /* selective yellow */
-  --color-black: #0c0c0c; /* cod gray */
-  --color-dark: #3d3d3d; /* mine shaft */
-  --color-gray: #b2b2b3; /* bombay */
-  --color-light: #d1d2d3; /* iron */
-  --color-deep: #030332; /* black rock */
-  --color-success: #0cc544; /* malachite */
-  --color-info: #0909d8; /* dark blue */
-  --color-danger: #f03925; /* pomegranate */
+  /* Professional Luxury Color Palette */
+  --color-primary: #d4a574; /* Warm gold/tan */
+  --color-primary-dark: #b8956a; /* Deep gold */
+  --color-black: #1a1a1a; /* Premium black */
+  --color-dark: #2d2d2d; /* Charcoal */
+  --color-gray: #666666; /* Medium gray */
+  --color-light: #e8e8e8; /* Light gray */
+  --color-cream: #faf8f3; /* Luxury cream */
+  --color-success: #2d7d5e; /* Muted green */
+  --color-info: #4a7ba7; /* Professional blue */
+  --color-danger: #c9453c; /* Refined red */
 
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: var(--color-primary);
+  --background: #faf8f3;
+  --foreground: #1a1a1a;
+  --card: #ffffff;
+  --card-foreground: #1a1a1a;
+  --popover: #ffffff;
+  --popover-foreground: #1a1a1a;
+  --primary: #d4a574;
   --primary-foreground: #ffffff;
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: var(--color-primary-alt);
+  --secondary: #2d2d2d;
+  --secondary-foreground: #ffffff;
+  --muted: #e8e8e8;
+  --muted-foreground: #666666;
+  --accent: #b8956a;
   --accent-foreground: #ffffff;
-  --destructive: oklch(0.577 0.245 27.325);
-  --destructive-foreground: oklch(0.985 0 0);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: var(--color-primary-alt);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
-  --radius: 0.625rem;
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: var(--color-primary);
+  --destructive: #c9453c;
+  --destructive-foreground: #ffffff;
+  --border: #e0dcd3;
+  --input: #ffffff;
+  --ring: #d4a574;
+  --chart-1: #d4a574;
+  --chart-2: #4a7ba7;
+  --chart-3: #2d7d5e;
+  --chart-4: #b8956a;
+  --chart-5: #666666;
+  --radius: 0.5rem;
+  --sidebar: #2d2d2d;
+  --sidebar-foreground: #ffffff;
+  --sidebar-primary: #d4a574;
   --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: var(--color-primary-alt);
+  --sidebar-accent: #ffffff;
+  --sidebar-accent-foreground: #2d2d2d;
+  --sidebar-border: #404040;
+  --sidebar-ring: #d4a574;
 }
 
 .dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.145 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.145 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: var(--color-primary);
-  --primary-foreground: #ffffff;
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: var(--color-primary-alt);
-  --accent-foreground: #ffffff;
-  --destructive: oklch(0.396 0.141 25.723);
-  --destructive-foreground: oklch(0.637 0.237 25.331);
-  --border: oklch(0.269 0 0);
-  --input: oklch(0.269 0 0);
-  --ring: var(--color-primary-alt);
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: var(--color-primary);
-  --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(0.269 0 0);
-  --sidebar-ring: var(--color-primary-alt);
+  --background: #1a1a1a;
+  --foreground: #faf8f3;
+  --card: #2d2d2d;
+  --card-foreground: #faf8f3;
+  --popover: #2d2d2d;
+  --popover-foreground: #faf8f3;
+  --primary: #d4a574;
+  --primary-foreground: #1a1a1a;
+  --secondary: #e8e8e8;
+  --secondary-foreground: #1a1a1a;
+  --muted: #404040;
+  --muted-foreground: #b0b0b0;
+  --accent: #b8956a;
+  --accent-foreground: #1a1a1a;
+  --destructive: #e85d52;
+  --destructive-foreground: #1a1a1a;
+  --border: #404040;
+  --input: #2d2d2d;
+  --ring: #d4a574;
+  --chart-1: #d4a574;
+  --chart-2: #7aa8d6;
+  --chart-3: #5ba37f;
+  --chart-4: #c8b494;
+  --chart-5: #999999;
+  --sidebar: #1a1a1a;
+  --sidebar-foreground: #faf8f3;
+  --sidebar-primary: #d4a574;
+  --sidebar-primary-foreground: #1a1a1a;
+  --sidebar-accent: #2d2d2d;
+  --sidebar-accent-foreground: #faf8f3;
+  --sidebar-border: #404040;
+  --sidebar-ring: #d4a574;
 }
 
 @theme inline {
-  --font-sans: var(--font-cairo, 'Cairo'), 'Arial', sans-serif;
-  --font-mono: var(--font-montserrat, 'Montserrat'), monospace;
+  --font-sans: 'Inter', 'Segoe UI', sans-serif;
+  --font-mono: 'Fira Code', monospace;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -113,10 +113,10 @@
   --color-chart-3: var(--chart-3);
   --color-chart-4: var(--chart-4);
   --color-chart-5: var(--chart-5);
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
+  --radius-sm: 0.375rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.625rem;
+  --radius-xl: 0.75rem;
   --color-sidebar: var(--sidebar);
   --color-sidebar-foreground: var(--sidebar-foreground);
   --color-sidebar-primary: var(--sidebar-primary);
@@ -133,28 +133,74 @@
   }
   body {
     @apply bg-background text-foreground;
+    font-family: 'Inter', 'Segoe UI', sans-serif;
     font-size: 16px;
     overflow-x: hidden;
+    line-height: 1.6;
   }
 
   html {
     scroll-behavior: smooth;
     -webkit-tap-highlight-color: transparent;
   }
+
+  h1 {
+    @apply text-4xl font-bold tracking-tight text-foreground;
+  }
+
+  h2 {
+    @apply text-3xl font-semibold tracking-tight text-foreground;
+  }
+
+  h3 {
+    @apply text-2xl font-semibold text-foreground;
+  }
+
+  h4 {
+    @apply text-xl font-semibold text-foreground;
+  }
+
+  p {
+    @apply text-base text-muted-foreground leading-relaxed;
+  }
 }
 
-/* Custom utility classes */
+/* Custom utility classes - Professional styling */
 @layer utilities {
   .btn-primary {
-    @apply bg-yellow-500 text-white hover:bg-yellow-600 font-medium transition-all duration-300;
+    @apply bg-primary text-primary-foreground hover:bg-accent hover:text-accent-foreground font-medium transition-all duration-300 rounded-lg px-6 py-2.5 shadow-sm hover:shadow-md;
   }
 
   .btn-secondary {
-    @apply bg-gray-700 text-white hover:bg-gray-800 font-medium transition-all duration-300;
+    @apply bg-secondary text-secondary-foreground hover:bg-secondary/90 font-medium transition-all duration-300 rounded-lg px-6 py-2.5 shadow-sm hover:shadow-md;
   }
 
   .btn-outline {
-    @apply border-2 border-yellow-500 text-yellow-600 hover:bg-yellow-500 hover:text-white font-medium transition-all duration-300;
+    @apply border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground font-medium transition-all duration-300 rounded-lg px-6 py-2.5;
+  }
+
+  .btn-ghost {
+    @apply text-foreground hover:bg-muted hover:text-foreground font-medium transition-all duration-300 rounded-lg px-6 py-2.5;
+  }
+
+  .card-elevated {
+    @apply bg-card shadow-sm border border-border rounded-lg p-6;
+  }
+
+  .card-bordered {
+    @apply bg-card border-2 border-border rounded-lg p-6;
+  }
+
+  .section-header {
+    @apply text-center space-y-4;
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .text-pretty {
+    text-wrap: pretty;
   }
 }
 
