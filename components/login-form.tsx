@@ -1,6 +1,7 @@
 "use client"
 
-import { useActionState } from "react"
+import { useActionState, useEffect } from "react"
+import { useFormStatus } from "react-dom"
 import { signIn } from "@/lib/actions"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -10,8 +11,28 @@ import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Loader2, Mail, Lock, AlertCircle, UserPlus } from "lucide-react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
-import { useEffect } from "react"
 import { useLanguage } from "@/contexts/language-context"
+
+function LoginSubmitButton({ label }: { label: string }) {
+  const { pending } = useFormStatus()
+
+  return (
+    <Button
+      type="submit"
+      className="w-full bg-yellow-500 hover:bg-yellow-600 text-slate-900 font-semibold"
+      disabled={pending}
+    >
+      {pending ? (
+        <>
+          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+          {label}...
+        </>
+      ) : (
+        label
+      )}
+    </Button>
+  )
+}
 
 export default function LoginForm() {
   const [state, formAction] = useActionState(signIn, null)
@@ -21,6 +42,7 @@ export default function LoginForm() {
   useEffect(() => {
     if (state?.success) {
       router.push("/admin")
+      router.refresh()
     }
   }, [state?.success, router])
 
@@ -65,13 +87,7 @@ export default function LoginForm() {
                 <AlertCircle className="h-4 w-4 text-red-400" />
                 <AlertDescription className="text-red-400 space-y-2">
                   <p className="font-semibold">{language === "ar" ? "فشل تسجيل الدخول" : "Login Failed"}</p>
-                  <p>
-                    {state.error === "Invalid login credentials"
-                      ? language === "ar"
-                        ? "بيانات الدخول غير صحيحة. يرجى التحقق من البريد الإلكتروني وكلمة المرور."
-                        : "Invalid login credentials. Please check your email and password."
-                      : state.error}
-                  </p>
+                  <p>{state.error}</p>
                   <p className="text-sm">
                     {language === "ar" ? (
                       <>
@@ -104,8 +120,10 @@ export default function LoginForm() {
                   name="email"
                   type="email"
                   required
+                  autoComplete="email"
+                  maxLength={254}
                   className="pl-10 bg-slate-700/50 border-slate-600 text-white placeholder:text-slate-400"
-                  placeholder={language === "ar" ? "admin@al-azab.co" : "admin@al-azab.co"}
+                  placeholder="admin@alazab.com"
                 />
               </div>
             </div>
@@ -121,26 +139,15 @@ export default function LoginForm() {
                   name="password"
                   type="password"
                   required
+                  autoComplete="current-password"
+                  maxLength={256}
                   className="pl-10 bg-slate-700/50 border-slate-600 text-white placeholder:text-slate-400"
-                  placeholder="••••••••"
+                  placeholder="••••••••••••"
                 />
               </div>
             </div>
 
-            <Button
-              type="submit"
-              className="w-full bg-yellow-500 hover:bg-yellow-600 text-slate-900 font-semibold"
-              disabled={state?.loading}
-            >
-              {state?.loading ? (
-                <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  {t("login")}...
-                </>
-              ) : (
-                t("login")
-              )}
-            </Button>
+            <LoginSubmitButton label={t("login")} />
 
             <div className="space-y-3 pt-4 border-t border-slate-700">
               <p className="text-center text-slate-400 text-sm">
