@@ -88,7 +88,7 @@ export const MATERIAL_PRICES: Record<string, Record<string, number>> = {
 }
 
 // أسعار العمالة (جنيه مصري)
-export const LABOR_RATES: Record<string, Record<string, number>> = {
+export const LABOR_RATES: Record<string, Record<string, number> | number> = {
   skilled: {
     electrician: 150,
     plumber: 150,
