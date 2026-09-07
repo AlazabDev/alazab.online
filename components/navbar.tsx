@@ -8,7 +8,7 @@ import Image from "next/image"
 import { usePathname } from "next/navigation"
 import { ChevronDown, Menu, Moon, Sun } from "lucide-react"
 import { useTheme } from "next-themes"
-import { motion, AnimatePresence } from "framer-motion"
+import { motion, AnimatePresence, type Variants } from "framer-motion"
 
 import { Button } from "@/components/ui/button"
 import { AnimatedButton } from "@/components/ui/animated-button"
@@ -29,29 +29,24 @@ export function Navbar() {
   const prefersReducedMotion = useReducedMotion()
   const { t, language } = useLanguage()
 
-  // After mounting, we can access the theme
   useEffect(() => {
     setMounted(true)
 
-    // Add scroll event listener
     const handleScroll = () => {
       const currentScrollY = window.scrollY
 
-      // Determine scroll direction
       if (currentScrollY > lastScrollY + 5) {
         setScrollDirection("down")
       } else if (currentScrollY < lastScrollY - 5) {
         setScrollDirection("up")
       }
 
-      // Update scroll state
       if (currentScrollY > 10) {
         setScrolled(true)
       } else {
         setScrolled(false)
       }
 
-      // Always show navbar at the top of the page
       if (currentScrollY < 50) {
         setScrollDirection("up")
       }
@@ -61,7 +56,6 @@ export function Navbar() {
 
     window.addEventListener("scroll", handleScroll, { passive: true })
 
-    // Close mobile menu on route change
     const handleRouteChange = () => {
       setMobileMenuOpen(false)
     }
@@ -74,18 +68,15 @@ export function Navbar() {
     }
   }, [lastScrollY])
 
-  // Toggle mobile menu with useCallback to ensure consistent behavior
   const toggleMobileMenu = useCallback(() => {
     setMobileMenuOpen((prevState) => !prevState)
   }, [])
 
-  // Close mobile menu
   const closeMobileMenu = useCallback(() => {
     setMobileMenuOpen(false)
   }, [])
 
-  // Navbar animation variants
-  const navVariants = {
+  const navVariants: Variants = {
     visible: {
       y: 0,
       opacity: 1,
@@ -108,7 +99,6 @@ export function Navbar() {
     },
   }
 
-  // Determine if navbar should be visible
   const shouldShowNavbar = scrollDirection === "up" || !scrolled || lastScrollY < 50
 
   return (
@@ -144,7 +134,6 @@ export function Navbar() {
               </Link>
             </div>
 
-            {/* Desktop Navigation - Fixed RTL/LTR layout */}
             <nav className="hidden md:flex items-center justify-center">
               <ul className={`flex items-center ${language === "ar" ? "space-x-reverse space-x-2" : "space-x-2"}`}>
                 <NavItem
@@ -203,7 +192,6 @@ export function Navbar() {
               </ul>
             </nav>
 
-            {/* Desktop Right Side - Fixed RTL/LTR layout */}
             <div
               className={`hidden md:flex items-center gap-2 lg:gap-4 ${language === "ar" ? "flex-row-reverse" : "flex-row"}`}
             >
@@ -220,7 +208,6 @@ export function Navbar() {
                 </AnimatedButton>
               </Link>
 
-              {/* Theme toggle button */}
               {mounted && (
                 <motion.div
                   whileHover={{ rotate: 15 }}
@@ -256,13 +243,11 @@ export function Navbar() {
               )}
             </div>
 
-            {/* Mobile Menu Button - Fixed RTL/LTR layout */}
             <div
               className={`flex items-center gap-1.5 sm:gap-2 md:hidden ${language === "ar" ? "flex-row-reverse" : "flex-row"}`}
             >
               <LanguageToggle />
 
-              {/* Mobile theme toggle */}
               {mounted && (
                 <motion.div
                   whileHover={{ rotate: 15 }}
@@ -296,7 +281,6 @@ export function Navbar() {
                 </motion.div>
               )}
 
-              {/* Hamburger Menu Button */}
               <Button
                 variant="ghost"
                 size="icon"
@@ -313,13 +297,11 @@ export function Navbar() {
         </div>
       </motion.header>
 
-      {/* Mobile Menu - Now using a separate component for better isolation */}
       <MobileMenu isOpen={mobileMenuOpen} onClose={closeMobileMenu} />
     </>
   )
 }
 
-// Desktop Nav Item
 function NavItem({
   href,
   label,
