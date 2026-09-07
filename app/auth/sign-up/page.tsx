@@ -1,20 +1,20 @@
 import { redirect } from "next/navigation"
 import { createClient } from "@/lib/supabase/server"
+import { isAdminUser } from "@/lib/auth/admin"
 import SignUpForm from "@/components/sign-up-form"
 
 export default async function SignUpPage() {
-  const supabase = createClient()
-
   try {
+    const supabase = await createClient()
     const {
       data: { user },
     } = await supabase.auth.getUser()
 
     if (user) {
-      redirect("/admin")
+      redirect(isAdminUser(user) ? "/admin" : "/")
     }
-  } catch (error) {
-    // Continue to sign up page if there's an error
+  } catch {
+    // Render the sign-up form if authentication is unavailable.
   }
 
   return (
