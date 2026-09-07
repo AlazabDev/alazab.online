@@ -1,9 +1,10 @@
 "use client"
 
+import { use } from "react"
 import { notFound } from "next/navigation"
 import Image from "next/image"
 import Link from "next/link"
-import { ArrowLeft, Calendar, MapPin, Users, Ruler } from "lucide-react"
+import { ArrowLeft, MapPin, Users, Ruler } from "lucide-react"
 import { motion } from "framer-motion"
 
 import { Button } from "@/components/ui/button"
@@ -12,14 +13,15 @@ import { useLanguage } from "@/contexts/language-context"
 import { PROJECTS, PROJECT_CATEGORIES } from "@/lib/data/projects"
 
 interface ProjectPageProps {
-  params: {
+  params: Promise<{
     id: string
-  }
+  }>
 }
 
 export default function ProjectPage({ params }: ProjectPageProps) {
+  const { id } = use(params)
   const { language } = useLanguage()
-  const project = PROJECTS.find((item) => item.id === params.id)
+  const project = PROJECTS.find((item) => item.id === id)
   const isRTL = language === "ar"
 
   if (!project) {
@@ -37,10 +39,7 @@ export default function ProjectPage({ params }: ProjectPageProps) {
         <div className="absolute inset-0 bg-black/60 z-10" />
         <Image src={project.heroImage} alt={title} fill className="object-cover" priority sizes="100vw" />
         <div className="relative z-20 container mx-auto px-4 h-full flex flex-col justify-center">
-          <Link
-            href="/projects"
-            className="inline-flex items-center text-white/90 hover:text-white mb-6"
-          >
+          <Link href="/projects" className="inline-flex items-center text-white/90 hover:text-white mb-6">
             <ArrowLeft className={`h-4 w-4 ${isRTL ? "ml-2 rotate-180" : "mr-2"}`} />
             {language === "ar" ? "العودة إلى المشاريع" : "Back to projects"}
           </Link>
@@ -162,7 +161,7 @@ export default function ProjectPage({ params }: ProjectPageProps) {
         title={language === "ar" ? "جاهزون لتنفيذ مشروعكم القادم" : "Ready for Your Next Project"}
         description={
           language === "ar"
-            ? "دع فريق العزب يقود مشروعك من التصميم إلى التسليم بأعلى معايير الجودة." 
+            ? "دع فريق العزب يقود مشروعك من التصميم إلى التسليم بأعلى معايير الجودة."
             : "Let Alazab's team lead your project from design to delivery with the highest quality standards."
         }
         primaryLabel={language === "ar" ? "تواصل معنا" : "Contact Us"}
