@@ -1,9 +1,7 @@
 "use client"
 
 import React from "react"
-
-import { motion } from "framer-motion"
-import { useReducedMotion } from "framer-motion"
+import { motion, useReducedMotion, type TargetAndTransition } from "framer-motion"
 import { cn } from "@/lib/utils"
 import { Button, type ButtonProps } from "@/components/ui/button"
 
@@ -27,7 +25,6 @@ export function AnimatedButton({
 }: AnimatedButtonProps) {
   const prefersReducedMotion = useReducedMotion()
 
-  // If user prefers reduced motion, disable animations
   if (prefersReducedMotion) {
     return (
       <Button className={cn("text-white", className)} {...props}>
@@ -36,8 +33,7 @@ export function AnimatedButton({
     )
   }
 
-  // Get hover animation based on selected effect
-  const getHoverAnimation = () => {
+  const getHoverAnimation = (): TargetAndTransition => {
     switch (hoverEffect) {
       case "scale":
         return { scale: hoverScale, transition: { duration: 0.2 } }
@@ -68,14 +64,11 @@ export function AnimatedButton({
     }
   }
 
-  // Process children to add icon animation if needed
   const processChildren = () => {
     if (!iconAnimation && !iconRotate) return children
 
     return React.Children.map(children, (child, index) => {
-      // Check if the child is the last element and likely an icon
       if (index === React.Children.count(children) - 1 && React.isValidElement(child)) {
-        // Apply animation to icon (assumed to be the last child)
         return (
           <motion.div
             animate={iconRotate ? { rotate: 360 } : { x: [0, 4, 0] }}
