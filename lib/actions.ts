@@ -3,37 +3,38 @@
 import { createClient } from "@/lib/supabase/server"
 import { redirect } from "next/navigation"
 
+function normalizeEmail(value: FormDataEntryValue | null) {
+  return typeof value === "string" ? value.trim().toLowerCase() : ""
+}
+
+function readPassword(value: FormDataEntryValue | null) {
+  return typeof value === "string" ? value : ""
+}
+
 export async function signIn(prevState: any, formData: FormData) {
   if (!formData) {
     return { error: "Form data is missing" }
   }
 
-  const email = formData.get("email")
-  const password = formData.get("password")
+  const email = normalizeEmail(formData.get("email"))
+  const password = readPassword(formData.get("password"))
 
-  if (!email || !password) {
-    return { error: "Email and password are required" }
+  if (!email || !password || email.length > 254 || password.length > 256) {
+    return { error: "Invalid email or password" }
   }
 
-  const supabase = createClient()
-
   try {
-    const { error } = await supabase.auth.signInWithPassword({
-      email: email.toString(),
-      password: password.toString(),
-    })
+    const supabase = await createClient()
+    const { error } = await supabase.auth.signInWithPassword({ email, password })
 
     if (error) {
-      if (error.message === "Invalid login credentials") {
-        return { error: "Invalid login credentials" }
-      }
-      return { error: error.message }
+      return { error: "Invalid email or password" }
     }
 
     return { success: true }
   } catch (error) {
     console.error("Login error:", error)
-    return { error: "An unexpected error occurred. Please try again." }
+    return { error: "Authentication service is temporarily unavailable" }
   }
 }
 
@@ -42,41 +43,42 @@ export async function signUp(prevState: any, formData: FormData) {
     return { error: "Form data is missing" }
   }
 
-  const email = formData.get("email")
-  const password = formData.get("password")
+  const email = normalizeEmail(formData.get("email"))
+  const password = readPassword(formData.get("password"))
 
-  if (!email || !password) {
-    return { error: "Email and password are required" }
+  if (!email || email.length > 254 || password.length < 12 || password.length > 256) {
+    return { error: "Use a valid email and a password of at least 12 characters" }
   }
 
-  const supabase = createClient()
-
   try {
+    const supabase = await createClient()
+    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://alazab.com"
     const { error } = await supabase.auth.signUp({
-      email: email.toString(),
-      password: password.toString(),
+      email,
+      password,
       options: {
-        emailRedirectTo:
-          process.env.NEXT_PUBLIC_DEV_SUPABASE_REDIRECT_URL ||
-          `${process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"}/auth/callback`,
+        emailRedirectTo: `${siteUrl.replace(/\/$/, "")}/auth/callback`,
       },
     })
 
     if (error) {
-      return { error: error.message }
+      return { error: "Unable to create account" }
     }
 
     return { success: "Check your email to confirm your account." }
   } catch (error) {
     console.error("Sign up error:", error)
-    return { error: "An unexpected error occurred. Please try again." }
+    return { error: "Authentication service is temporarily unavailable" }
   }
 }
 
 export async function signOut() {
-  const supabase = createClient()
-  await supabase.auth.signOut()
+  try {
+    const supabase = await createClient()
+    await supabase.auth.signOut()
+  } catch (error) {
+    console.error("Sign out error:", error)
+  }
+
   redirect("/auth/login")
 }
-
-/* Removed bypassLogin function - not needed for production */
