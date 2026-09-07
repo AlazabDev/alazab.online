@@ -1,15 +1,23 @@
 // AzaBot Text-to-Speech Service
-// Professional text-to-speech using Web Speech Synthesis API
+// Browser-safe text-to-speech using the Web Speech Synthesis API.
 
 export class AzaTextToSpeech {
-  private synthesis = window.speechSynthesis
   private utterance: SpeechSynthesisUtterance | null = null
   private isPlaying = false
 
   constructor(private language: "ar" | "en" = "ar") {}
 
+  private getSynthesis(): SpeechSynthesis | null {
+    if (typeof window === "undefined" || !("speechSynthesis" in window)) {
+      return null
+    }
+    return window.speechSynthesis
+  }
+
   public speak(text: string, onEnd?: () => void): void {
-    // Cancel any ongoing speech
+    const synthesis = this.getSynthesis()
+    if (!synthesis || typeof SpeechSynthesisUtterance === "undefined") return
+
     if (this.isPlaying) {
       this.stop()
     }
@@ -22,12 +30,10 @@ export class AzaTextToSpeech {
 
     this.utterance.onstart = () => {
       this.isPlaying = true
-      console.log("[AzaBot] Speech synthesis started")
     }
 
     this.utterance.onend = () => {
       this.isPlaying = false
-      console.log("[AzaBot] Speech synthesis ended")
       onEnd?.()
     }
 
@@ -36,25 +42,28 @@ export class AzaTextToSpeech {
       this.isPlaying = false
     }
 
-    this.synthesis.speak(this.utterance)
+    synthesis.speak(this.utterance)
   }
 
   public stop(): void {
-    if (this.synthesis.speaking) {
-      this.synthesis.cancel()
-      this.isPlaying = false
+    const synthesis = this.getSynthesis()
+    if (synthesis?.speaking) {
+      synthesis.cancel()
     }
+    this.isPlaying = false
   }
 
   public pause(): void {
-    if (this.synthesis.speaking && !this.synthesis.paused) {
-      this.synthesis.pause()
+    const synthesis = this.getSynthesis()
+    if (synthesis?.speaking && !synthesis.paused) {
+      synthesis.pause()
     }
   }
 
   public resume(): void {
-    if (this.synthesis.paused) {
-      this.synthesis.resume()
+    const synthesis = this.getSynthesis()
+    if (synthesis?.paused) {
+      synthesis.resume()
     }
   }
 
@@ -67,7 +76,7 @@ export class AzaTextToSpeech {
   }
 
   public getAvailableVoices(): SpeechSynthesisVoice[] {
-    return this.synthesis.getVoices()
+    return this.getSynthesis()?.getVoices() || []
   }
 
   public getArabicVoices(): SpeechSynthesisVoice[] {
@@ -79,10 +88,8 @@ export class AzaTextToSpeech {
   }
 }
 
-// Utility functions
-export const isTextToSpeechSupported = (): boolean => {
-  return "speechSynthesis" in window
-}
+export const isTextToSpeechSupported = (): boolean =>
+  typeof window !== "undefined" && "speechSynthesis" in window
 
 export const preloadVoices = (): void => {
   if (isTextToSpeechSupported()) {
