@@ -1,9 +1,7 @@
 "use client"
 
 import type React from "react"
-
-import { motion } from "framer-motion"
-import { useReducedMotion } from "framer-motion"
+import { motion, useReducedMotion, type Variants } from "framer-motion"
 import { cn } from "@/lib/utils"
 
 interface ScaleInProps {
@@ -27,7 +25,7 @@ export function ScaleIn({
 }: ScaleInProps) {
   const prefersReducedMotion = useReducedMotion()
 
-  const variants = {
+  const variants: Variants = {
     hidden: {
       opacity: 0,
       scale,
@@ -38,7 +36,7 @@ export function ScaleIn({
       transition: {
         duration,
         delay,
-        ease: [0.25, 0.1, 0.25, 1.0], // Smooth easing
+        ease: [0.25, 0.1, 0.25, 1] as const,
       },
     },
   }
@@ -48,7 +46,7 @@ export function ScaleIn({
       className={cn(className)}
       initial="hidden"
       whileInView="visible"
-      viewport={{ once, threshold }}
+      viewport={{ once, amount: threshold }}
       variants={prefersReducedMotion ? {} : variants}
     >
       {children}
