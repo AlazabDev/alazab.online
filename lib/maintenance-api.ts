@@ -1,10 +1,12 @@
-// Types for Maintenance API requests and responses
+export type MaintenanceServiceType = "plumbing" | "electrical" | "ac" | "painting" | "carpentry" | "general"
+export type MaintenancePriority = "low" | "medium" | "high"
+
 export interface MaintenanceRequestPayload {
   customerName: string
   customerPhone: string
-  serviceType: "plumbing" | "electrical" | "ac" | "painting" | "carpentry" | "general"
+  serviceType: string
   description: string
-  priority: "low" | "medium" | "high"
+  priority: MaintenancePriority
 }
 
 export interface MaintenanceRequestResponse {
@@ -30,47 +32,47 @@ export interface QueryMaintenanceResponse {
   error?: string
 }
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_MAINTENANCE_API_BASE_URL || "https://zrrffsjbfkphridqyais.supabase.co/functions/v1"
-const API_KEY = process.env.NEXT_PUBLIC_MAINTENANCE_API_KEY
+const VALID_SERVICES = new Set<MaintenanceServiceType>([
+  "plumbing",
+  "electrical",
+  "ac",
+  "painting",
+  "carpentry",
+  "general",
+])
 
-/**
- * Submit a maintenance request to the API
- */
+function isMaintenanceService(value: string): value is MaintenanceServiceType {
+  return VALID_SERVICES.has(value as MaintenanceServiceType)
+}
+
+async function postInternal<T>(body: Record<string, unknown>): Promise<T> {
+  const response = await fetch("/api/maintenance", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(body),
+  })
+
+  const data = await response.json().catch(() => ({}))
+  if (!response.ok) {
+    throw new Error(typeof data.error === "string" ? data.error : "Maintenance request failed")
+  }
+  return data as T
+}
+
 export async function submitMaintenanceRequest(payload: MaintenanceRequestPayload): Promise<MaintenanceRequestResponse> {
   try {
-    if (!API_KEY) {
-      throw new Error("API key is not configured")
+    if (!isMaintenanceService(payload.serviceType)) {
+      return { success: false, error: "Invalid maintenance service" }
     }
 
-    const response = await fetch(`${API_BASE_URL}/maintenance-gateway`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "x-api-key": API_KEY,
-      },
-      body: JSON.stringify({
-        customerName: payload.customerName,
-        customerPhone: payload.customerPhone,
-        serviceType: payload.serviceType,
-        description: payload.description,
-        priority: payload.priority,
-      }),
+    return await postInternal<MaintenanceRequestResponse>({
+      operation: "submit",
+      customerName: payload.customerName,
+      customerPhone: payload.customerPhone,
+      serviceType: payload.serviceType,
+      description: payload.description,
+      priority: payload.priority,
     })
-
-    const data = await response.json()
-
-    if (!response.ok) {
-      return {
-        success: false,
-        error: data.error || "Failed to submit maintenance request",
-      }
-    }
-
-    return {
-      success: true,
-      requestNumber: data.requestNumber || data.id,
-      message: data.message || "Maintenance request submitted successfully",
-    }
   } catch (error) {
     console.error("Error submitting maintenance request:", error)
     return {
@@ -80,36 +82,12 @@ export async function submitMaintenanceRequest(payload: MaintenanceRequestPayloa
   }
 }
 
-/**
- * Query maintenance request by request number
- */
 export async function queryMaintenanceByNumber(requestNumber: string): Promise<QueryMaintenanceResponse> {
   try {
-    if (!API_KEY) {
-      throw new Error("API key is not configured")
-    }
-
-    const response = await fetch(`${API_BASE_URL}/query-maintenance-requests?requestNumber=${encodeURIComponent(requestNumber)}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        "x-api-key": API_KEY,
-      },
+    return await postInternal<QueryMaintenanceResponse>({
+      operation: "query-number",
+      requestNumber,
     })
-
-    const data = await response.json()
-
-    if (!response.ok) {
-      return {
-        success: false,
-        error: data.error || "Request not found",
-      }
-    }
-
-    return {
-      success: true,
-      data: data.data || data,
-    }
   } catch (error) {
     console.error("Error querying maintenance request:", error)
     return {
@@ -119,36 +97,12 @@ export async function queryMaintenanceByNumber(requestNumber: string): Promise<Q
   }
 }
 
-/**
- * Query maintenance requests by phone number
- */
 export async function queryMaintenanceByPhone(phoneNumber: string): Promise<QueryMaintenanceResponse> {
   try {
-    if (!API_KEY) {
-      throw new Error("API key is not configured")
-    }
-
-    const response = await fetch(`${API_BASE_URL}/query-maintenance-requests?phone=${encodeURIComponent(phoneNumber)}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        "x-api-key": API_KEY,
-      },
+    return await postInternal<QueryMaintenanceResponse>({
+      operation: "query-phone",
+      phone: phoneNumber,
     })
-
-    const data = await response.json()
-
-    if (!response.ok) {
-      return {
-        success: false,
-        error: data.error || "No requests found for this phone number",
-      }
-    }
-
-    return {
-      success: true,
-      data: data.data || data,
-    }
   } catch (error) {
     console.error("Error querying maintenance requests by phone:", error)
     return {
@@ -158,9 +112,6 @@ export async function queryMaintenanceByPhone(phoneNumber: string): Promise<Quer
   }
 }
 
-/**
- * Service type translation helper
- */
 export const serviceTypeLabels = {
   ar: {
     plumbing: "سباكة",
@@ -180,9 +131,6 @@ export const serviceTypeLabels = {
   },
 }
 
-/**
- * Priority level translation helper
- */
 export const priorityLabels = {
   ar: {
     low: "منخفض",
