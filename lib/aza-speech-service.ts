@@ -1,10 +1,44 @@
 // AzaBot Speech Recognition Service
-// Professional speech-to-text using Web Speech API
+// Professional speech-to-text using the browser Web Speech API.
 
 type SpeechRecognitionCallback = (transcript: string, isFinal: boolean) => void
 
+type SpeechRecognitionEventLike = {
+  resultIndex: number
+  results: ArrayLike<{
+    0: { transcript: string }
+    isFinal: boolean
+  }>
+}
+
+type SpeechRecognitionErrorEventLike = { error: string }
+
+interface SpeechRecognitionLike {
+  lang: string
+  continuous: boolean
+  interimResults: boolean
+  onstart: (() => void) | null
+  onresult: ((event: SpeechRecognitionEventLike) => void) | null
+  onerror: ((event: SpeechRecognitionErrorEventLike) => void) | null
+  onend: (() => void) | null
+  start(): void
+  stop(): void
+  abort(): void
+}
+
+type SpeechRecognitionConstructor = new () => SpeechRecognitionLike
+
+function getSpeechRecognitionConstructor(): SpeechRecognitionConstructor | null {
+  if (typeof window === "undefined") return null
+  const browserWindow = window as typeof window & {
+    SpeechRecognition?: SpeechRecognitionConstructor
+    webkitSpeechRecognition?: SpeechRecognitionConstructor
+  }
+  return browserWindow.SpeechRecognition || browserWindow.webkitSpeechRecognition || null
+}
+
 export class AzaSpeechRecognition {
-  private recognition: SpeechRecognition | null = null
+  private recognition: SpeechRecognitionLike | null = null
   private isListening = false
   private transcript = ""
 
@@ -13,21 +47,19 @@ export class AzaSpeechRecognition {
   }
 
   private initializeSpeechRecognition() {
-    const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition
-    if (!SpeechRecognition) {
-      console.error("[AzaBot] Speech Recognition not supported in this browser")
+    const SpeechRecognitionCtor = getSpeechRecognitionConstructor()
+    if (!SpeechRecognitionCtor) {
       return
     }
 
-    this.recognition = new SpeechRecognition()
-    this.recognition.language = this.language
+    this.recognition = new SpeechRecognitionCtor()
+    this.recognition.lang = this.language
     this.recognition.continuous = true
     this.recognition.interimResults = true
   }
 
   public startListening(callback: SpeechRecognitionCallback): void {
     if (!this.recognition) {
-      console.error("[AzaBot] Speech Recognition not initialized")
       return
     }
 
@@ -35,15 +67,17 @@ export class AzaSpeechRecognition {
     this.isListening = true
 
     this.recognition.onstart = () => {
-      console.log("[AzaBot] Listening started...")
+      this.isListening = true
     }
 
-    this.recognition.onresult = (event: any) => {
+    this.recognition.onresult = (event) => {
       let interim = ""
       for (let i = event.resultIndex; i < event.results.length; i++) {
-        const transcript = event.results[i][0].transcript
-        if (event.results[i].isFinal) {
-          this.transcript += transcript + " "
+        const result = event.results[i]
+        if (!result) continue
+        const transcript = result[0]?.transcript || ""
+        if (result.isFinal) {
+          this.transcript += `${transcript} `
         } else {
           interim += transcript
         }
@@ -51,7 +85,7 @@ export class AzaSpeechRecognition {
       callback(this.transcript + interim, false)
     }
 
-    this.recognition.onerror = (event: any) => {
+    this.recognition.onerror = (event) => {
       console.error("[AzaBot] Speech recognition error:", event.error)
     }
 
@@ -73,12 +107,12 @@ export class AzaSpeechRecognition {
   public setLanguage(lang: "ar-SA" | "en-US") {
     this.language = lang
     if (this.recognition) {
-      this.recognition.language = lang
+      this.recognition.lang = lang
     }
   }
 
   public isSupported(): boolean {
-    return !!this.recognition
+    return Boolean(this.recognition)
   }
 
   public abort(): void {
@@ -89,12 +123,7 @@ export class AzaSpeechRecognition {
   }
 }
 
-// Utility functions
-export const isSpeechRecognitionSupported = (): boolean => {
-  const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition
-  return !!SpeechRecognition
-}
+export const isSpeechRecognitionSupported = (): boolean => Boolean(getSpeechRecognitionConstructor())
 
-export const getLanguageCode = (language: "ar" | "en"): "ar-SA" | "en-US" => {
-  return language === "ar" ? "ar-SA" : "en-US"
-}
+export const getLanguageCode = (language: "ar" | "en"): "ar-SA" | "en-US" =>
+  language === "ar" ? "ar-SA" : "en-US"
