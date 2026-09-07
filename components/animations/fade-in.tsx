@@ -1,9 +1,7 @@
 "use client"
 
 import type React from "react"
-
-import { motion } from "framer-motion"
-import { useReducedMotion } from "framer-motion"
+import { motion, useReducedMotion, type Variants } from "framer-motion"
 import { cn } from "@/lib/utils"
 
 interface FadeInProps {
@@ -29,7 +27,7 @@ export function FadeIn({
 }: FadeInProps) {
   const prefersReducedMotion = useReducedMotion()
 
-  const getDirectionOffset = () => {
+  const getDirectionOffset = (): { x?: number; y?: number } => {
     if (prefersReducedMotion) return {}
 
     switch (direction) {
@@ -46,7 +44,7 @@ export function FadeIn({
     }
   }
 
-  const variants = {
+  const variants: Variants = {
     hidden: {
       opacity: 0,
       ...getDirectionOffset(),
@@ -58,7 +56,7 @@ export function FadeIn({
       transition: {
         duration,
         delay,
-        ease: [0.25, 0.1, 0.25, 1.0], // Smooth easing
+        ease: [0.25, 0.1, 0.25, 1] as const,
       },
     },
   }
@@ -68,7 +66,7 @@ export function FadeIn({
       className={cn(className)}
       initial="hidden"
       whileInView="visible"
-      viewport={{ once, threshold }}
+      viewport={{ once, amount: threshold }}
       variants={prefersReducedMotion ? {} : variants}
     >
       {children}
