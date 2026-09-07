@@ -2,11 +2,11 @@
 
 import { createClient } from "@/lib/supabase/client"
 
-// Supabase Storage configuration
 const SUPABASE_URL = "https://zrrffsjbfkphridqyais.supabase.co"
 const BUCKET_NAME = "az_gallery"
 
-// Image categories matching the folder structure
+type StorageFile = { name: string }
+
 export const IMAGE_CATEGORIES = {
   commercial: "images/commercial",
   construction: "images/construction",
@@ -38,14 +38,10 @@ export async function listImages(category: ImageCategory): Promise<string[]> {
       sortBy: { column: "name", order: "asc" },
     })
 
-    if (error) {
-      // Fallback: try to fetch images directly from known URLs
-      return []
-    }
+    if (error) return []
 
-    // Filter out folders and return only image files
     return (
-      data
+      (data as StorageFile[] | null)
         ?.filter((file) => {
           const ext = file.name.split(".").pop()?.toLowerCase()
           return ["jpg", "jpeg", "png", "webp", "gif"].includes(ext || "")
@@ -70,7 +66,6 @@ const FALLBACK_IMAGES: Record<ImageCategory, string[]> = {
   uberfix: ["1.jpg", "2.jpg", "3.jpg"],
 }
 
-// Get all images with their full URLs for a category
 export async function getImagesForCategory(category: ImageCategory): Promise<Array<{ name: string; url: string }>> {
   let filenames = await listImages(category)
 
@@ -84,7 +79,6 @@ export async function getImagesForCategory(category: ImageCategory): Promise<Arr
   }))
 }
 
-// Get images for multiple categories
 export async function getImagesForCategories(
   categories: ImageCategory[],
 ): Promise<Record<ImageCategory, Array<{ name: string; url: string }>>> {
