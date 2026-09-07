@@ -13,7 +13,7 @@ export default function RootLayout({
 export const metadata = {
   title: "شركة العزب للمقاولات | Alazab Construction Company",
   description:
-    "شركة العزب للمقاولات وإدارة التنفيذ تقدم حلول التصميم المعماري والتصميم الداخلي وإدارة المشاريع والصيانة وفق معايير عالية.",
+    "العزب — حلول متكاملة للتصميم الداخلي، التنفيذ، الأثاث وإدارة المشاريع بمعايير دقيقة وهوية معمارية معاصرة.",
   applicationName: "شركة العزب للبناء والتشطيبات",
   keywords: "بناء، تشطيبات، صيانة، عمارات، مصر، القاهرة، بناء سكني، تشطيبات فاخرة",
   authors: [{ name: "AL-AZAB Construction" }],
@@ -24,7 +24,7 @@ export const metadata = {
     address: false,
     telephone: false,
   },
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://al-azab.co"),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://alazab.online"),
   openGraph: {
     type: "website",
     locale: "ar_EG",

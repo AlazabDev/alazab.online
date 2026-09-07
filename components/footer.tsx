@@ -11,14 +11,14 @@ export function Footer() {
   const isRTL = language === "ar"
 
   return (
-    <footer className="bg-gray-900 dark:bg-gray-950 text-white">
+    <footer className="bg-secondary text-secondary-foreground">
       <div className="container px-4 sm:px-6 lg:px-8 py-10 sm:py-12 md:py-16">
         <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4 max-w-6xl mx-auto">
           {/* Company Info */}
           <div className="text-center sm:text-start">
             <Link href="/" className="flex items-center gap-2 mb-4 sm:mb-6 justify-center sm:justify-start">
               <Image
-                src="https://al-azab.co/w.png"
+                src="/logo-english.jpg"
                 alt={language === "ar" ? "شعار شركة العزب للإنشاءات" : "Alazab Construction Company Logo"}
                 width={120}
                 height={40}
@@ -45,7 +45,7 @@ export function Footer() {
               <li>
                 <Link
                   href="/privacy-policy"
-                  className="text-gray-400 text-sm sm:text-base hover:text-yellow-500 transition-colors inline-block"
+                  className="text-gray-400 text-sm sm:text-base hover:text-primary transition-colors inline-block"
                 >
                   {language === "ar" ? "سياسة الخصوصية" : "Privacy Policy"}
                 </Link>
@@ -53,7 +53,7 @@ export function Footer() {
               <li>
                 <Link
                   href="/terms-of-service"
-                  className="text-gray-400 text-sm sm:text-base hover:text-yellow-500 transition-colors inline-block"
+                  className="text-gray-400 text-sm sm:text-base hover:text-primary transition-colors inline-block"
                 >
                   {language === "ar" ? "شروط الخدمة" : "Terms of Service"}
                 </Link>
@@ -61,7 +61,7 @@ export function Footer() {
               <li>
                 <Link
                   href="/cookie-policy"
-                  className="text-gray-400 text-sm sm:text-base hover:text-yellow-500 transition-colors inline-block"
+                  className="text-gray-400 text-sm sm:text-base hover:text-primary transition-colors inline-block"
                 >
                   {language === "ar" ? "سياسة الكوكيز" : "Cookie Policy"}
                 </Link>
@@ -69,7 +69,7 @@ export function Footer() {
               <li>
                 <Link
                   href="/legal"
-                  className="text-gray-400 text-sm sm:text-base hover:text-yellow-500 transition-colors inline-block"
+                  className="text-gray-400 text-sm sm:text-base hover:text-primary transition-colors inline-block"
                 >
                   {language === "ar" ? "إشعار قانوني" : "Legal Notice"}
                 </Link>
@@ -84,7 +84,7 @@ export function Footer() {
               <li>
                 <Link
                   href="/services"
-                  className="text-gray-400 text-sm sm:text-base hover:text-yellow-500 transition-colors inline-block"
+                  className="text-gray-400 text-sm sm:text-base hover:text-primary transition-colors inline-block"
                 >
                   {language === "ar" ? "التصميم المعماري" : "Architectural Design"}
                 </Link>
@@ -92,7 +92,7 @@ export function Footer() {
               <li>
                 <Link
                   href="/services"
-                  className="text-gray-400 text-sm sm:text-base hover:text-yellow-500 transition-colors inline-block"
+                  className="text-gray-400 text-sm sm:text-base hover:text-primary transition-colors inline-block"
                 >
                   {language === "ar" ? "التصميم الداخلي" : "Interior Design"}
                 </Link>
@@ -100,7 +100,7 @@ export function Footer() {
               <li>
                 <Link
                   href="/services"
-                  className="text-gray-400 text-sm sm:text-base hover:text-yellow-500 transition-colors inline-block"
+                  className="text-gray-400 text-sm sm:text-base hover:text-primary transition-colors inline-block"
                 >
                   {language === "ar" ? "إدارة المشاريع" : "Project Management"}
                 </Link>
@@ -108,7 +108,7 @@ export function Footer() {
               <li>
                 <Link
                   href="/services"
-                  className="text-gray-400 text-sm sm:text-base hover:text-yellow-500 transition-colors inline-block"
+                  className="text-gray-400 text-sm sm:text-base hover:text-primary transition-colors inline-block"
                 >
                   {language === "ar" ? "الصيانة وإدارة المرافق" : "Maintenance & Facilities"}
                 </Link>
@@ -125,7 +125,7 @@ export function Footer() {
               <li>
                 <Link
                   href="/about"
-                  className="text-gray-400 text-sm sm:text-base hover:text-yellow-500 transition-colors inline-block"
+                  className="text-gray-400 text-sm sm:text-base hover:text-primary transition-colors inline-block"
                 >
                   {language === "ar" ? "من نحن" : "About Us"}
                 </Link>
@@ -133,7 +133,7 @@ export function Footer() {
               <li>
                 <Link
                   href="/projects"
-                  className="text-gray-400 text-sm sm:text-base hover:text-yellow-500 transition-colors inline-block"
+                  className="text-gray-400 text-sm sm:text-base hover:text-primary transition-colors inline-block"
                 >
                   {language === "ar" ? "المشاريع" : "Projects"}
                 </Link>
@@ -141,7 +141,7 @@ export function Footer() {
               <li>
                 <Link
                   href="/clients"
-                  className="text-gray-400 text-sm sm:text-base hover:text-yellow-500 transition-colors inline-block"
+                  className="text-gray-400 text-sm sm:text-base hover:text-primary transition-colors inline-block"
                 >
                   {language === "ar" ? "عملاؤنا" : "Clients"}
                 </Link>
@@ -149,7 +149,7 @@ export function Footer() {
               <li>
                 <Link
                   href="/services"
-                  className="text-gray-400 text-sm sm:text-base hover:text-yellow-500 transition-colors inline-block"
+                  className="text-gray-400 text-sm sm:text-base hover:text-primary transition-colors inline-block"
                 >
                   {language === "ar" ? "خدماتنا" : "Our Services"}
                 </Link>
@@ -157,7 +157,7 @@ export function Footer() {
               <li>
                 <Link
                   href="/contact"
-                  className="text-gray-400 text-sm sm:text-base hover:text-yellow-500 transition-colors inline-block"
+                  className="text-gray-400 text-sm sm:text-base hover:text-primary transition-colors inline-block"
                 >
                   {language === "ar" ? "اتصل بنا" : "Contact Us"}
                 </Link>
@@ -192,7 +192,7 @@ export function Footer() {
             </ul>
             <div className="mt-6">
               <Link href="/contact#quote-form">
-                <Button className="bg-yellow-500 hover:bg-yellow-600 text-black font-medium w-full transition-all duration-300">
+                <Button className="bg-primary text-primary-foreground hover:bg-accent hover:text-accent-foreground font-medium w-full transition-all duration-300">
                   {language === "ar" ? "احصل على عرض سعر مجاني" : "Get a Free Quote"}
                 </Button>
               </Link>

@@ -4,91 +4,79 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  /* Professional Luxury Color Palette */
-  --color-primary: #d4a574; /* Warm gold/tan */
-  --color-primary-dark: #b8956a; /* Deep gold */
-  --color-black: #1a1a1a; /* Premium black */
-  --color-dark: #2d2d2d; /* Charcoal */
-  --color-gray: #666666; /* Medium gray */
-  --color-light: #e8e8e8; /* Light gray */
-  --color-cream: #faf8f3; /* Luxury cream */
-  --color-success: #2d7d5e; /* Muted green */
-  --color-info: #4a7ba7; /* Professional blue */
-  --color-danger: #c9453c; /* Refined red */
-
-  --background: #faf8f3;
-  --foreground: #1a1a1a;
+  --background: #f7f5f0;
+  --foreground: #1e1e1c;
   --card: #ffffff;
-  --card-foreground: #1a1a1a;
+  --card-foreground: #1e1e1c;
   --popover: #ffffff;
-  --popover-foreground: #1a1a1a;
-  --primary: #d4a574;
-  --primary-foreground: #ffffff;
-  --secondary: #2d2d2d;
-  --secondary-foreground: #ffffff;
-  --muted: #e8e8e8;
-  --muted-foreground: #666666;
-  --accent: #b8956a;
-  --accent-foreground: #ffffff;
-  --destructive: #c9453c;
+  --popover-foreground: #1e1e1c;
+  --primary: #b99a63;
+  --primary-foreground: #171715;
+  --secondary: #262622;
+  --secondary-foreground: #f7f5f0;
+  --muted: #ebe8e0;
+  --muted-foreground: #6f6c64;
+  --accent: #d6c29a;
+  --accent-foreground: #1e1e1c;
+  --destructive: #b94a42;
   --destructive-foreground: #ffffff;
-  --border: #e0dcd3;
+  --border: #ded9cf;
   --input: #ffffff;
-  --ring: #d4a574;
-  --chart-1: #d4a574;
-  --chart-2: #4a7ba7;
-  --chart-3: #2d7d5e;
-  --chart-4: #b8956a;
-  --chart-5: #666666;
-  --radius: 0.5rem;
-  --sidebar: #2d2d2d;
-  --sidebar-foreground: #ffffff;
-  --sidebar-primary: #d4a574;
-  --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: #ffffff;
-  --sidebar-accent-foreground: #2d2d2d;
-  --sidebar-border: #404040;
-  --sidebar-ring: #d4a574;
+  --ring: #b99a63;
+  --chart-1: #b99a63;
+  --chart-2: #262622;
+  --chart-3: #d6c29a;
+  --chart-4: #6f6c64;
+  --chart-5: #ded9cf;
+  --radius: 0.75rem;
+  --sidebar: #262622;
+  --sidebar-foreground: #f7f5f0;
+  --sidebar-primary: #b99a63;
+  --sidebar-primary-foreground: #171715;
+  --sidebar-accent: #34342f;
+  --sidebar-accent-foreground: #f7f5f0;
+  --sidebar-border: #45453d;
+  --sidebar-ring: #b99a63;
 }
 
 .dark {
-  --background: #1a1a1a;
-  --foreground: #faf8f3;
-  --card: #2d2d2d;
-  --card-foreground: #faf8f3;
-  --popover: #2d2d2d;
-  --popover-foreground: #faf8f3;
-  --primary: #d4a574;
-  --primary-foreground: #1a1a1a;
-  --secondary: #e8e8e8;
-  --secondary-foreground: #1a1a1a;
-  --muted: #404040;
-  --muted-foreground: #b0b0b0;
-  --accent: #b8956a;
-  --accent-foreground: #1a1a1a;
-  --destructive: #e85d52;
-  --destructive-foreground: #1a1a1a;
-  --border: #404040;
-  --input: #2d2d2d;
-  --ring: #d4a574;
-  --chart-1: #d4a574;
-  --chart-2: #7aa8d6;
-  --chart-3: #5ba37f;
-  --chart-4: #c8b494;
-  --chart-5: #999999;
-  --sidebar: #1a1a1a;
-  --sidebar-foreground: #faf8f3;
-  --sidebar-primary: #d4a574;
-  --sidebar-primary-foreground: #1a1a1a;
-  --sidebar-accent: #2d2d2d;
-  --sidebar-accent-foreground: #faf8f3;
-  --sidebar-border: #404040;
-  --sidebar-ring: #d4a574;
+  --background: #171715;
+  --foreground: #f7f5f0;
+  --card: #24241f;
+  --card-foreground: #f7f5f0;
+  --popover: #24241f;
+  --popover-foreground: #f7f5f0;
+  --primary: #d0b477;
+  --primary-foreground: #171715;
+  --secondary: #e8e3d8;
+  --secondary-foreground: #171715;
+  --muted: #302f29;
+  --muted-foreground: #b8b2a5;
+  --accent: #e0c995;
+  --accent-foreground: #171715;
+  --destructive: #d4665b;
+  --destructive-foreground: #171715;
+  --border: #3d3b33;
+  --input: #24241f;
+  --ring: #d0b477;
+  --chart-1: #d0b477;
+  --chart-2: #f7f5f0;
+  --chart-3: #e0c995;
+  --chart-4: #b8b2a5;
+  --chart-5: #3d3b33;
+  --sidebar: #171715;
+  --sidebar-foreground: #f7f5f0;
+  --sidebar-primary: #d0b477;
+  --sidebar-primary-foreground: #171715;
+  --sidebar-accent: #24241f;
+  --sidebar-accent-foreground: #f7f5f0;
+  --sidebar-border: #3d3b33;
+  --sidebar-ring: #d0b477;
 }
 
 @theme inline {
-  --font-sans: 'Inter', 'Segoe UI', sans-serif;
-  --font-mono: 'Fira Code', monospace;
+  --font-sans: var(--font-cairo), var(--font-montserrat), sans-serif;
+  --font-mono: var(--font-montserrat), monospace;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -133,10 +121,11 @@
   }
   body {
     @apply bg-background text-foreground;
-    font-family: 'Inter', 'Segoe UI', sans-serif;
+    font-family: var(--font-cairo), var(--font-montserrat), sans-serif;
     font-size: 16px;
     overflow-x: hidden;
-    line-height: 1.6;
+    line-height: 1.7;
+    background-image: linear-gradient(to bottom, color-mix(in srgb, var(--primary) 4%, transparent), transparent 420px);
   }
 
   html {
@@ -208,10 +197,6 @@
 [dir="rtl"] {
   text-align: right;
   direction: rtl;
-}
-
-[dir="rtl"] .flex:not(.flex-col) {
-  flex-direction: row-reverse;
 }
 
 /* Mobile optimizations */

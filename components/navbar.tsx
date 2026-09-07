@@ -123,7 +123,7 @@ export function Navbar() {
                   className="relative"
                 >
                   <Image
-                    src={mounted && theme === "dark" ? "https://al-azab.co/w.png" : "https://al-azab.co/b.png"}
+                    src={mounted && theme === "dark" ? "/logo-english.jpg" : "/logo.png"}
                     alt="Alazab Construction Company Logo"
                     width={96}
                     height={96}
