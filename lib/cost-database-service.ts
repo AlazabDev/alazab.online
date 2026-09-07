@@ -6,17 +6,31 @@ const TABLE_ITEMS = "cost_estimate_items"
 const TABLE_COMPARISONS = "cost_comparisons"
 
 export class CostDatabaseService {
+  private static async authenticatedClient() {
+    const supabase = createClient()
+    const {
+      data: { user },
+      error,
+    } = await supabase.auth.getUser()
+
+    if (error || !user) {
+      throw new Error("Authentication required")
+    }
+
+    return { supabase, user }
+  }
+
   /**
    * إنشاء عرض جديد
    */
   static async createEstimate(estimate: Omit<ProjectEstimate, "id" | "createdAt" | "updatedAt">) {
-    const supabase = createClient()
-
     try {
+      const { supabase, user } = await this.authenticatedClient()
       const { data, error } = await supabase
         .from(TABLE_ESTIMATES)
         .insert([
           {
+            user_id: user.id,
             title: estimate.title,
             title_ar: estimate.titleAr,
             project_type: estimate.projectType,
@@ -38,10 +52,13 @@ export class CostDatabaseService {
 
       if (error) throw error
 
-      // إضافة العناصر
       if (data && data[0] && estimate.items.length > 0) {
         const estimateId = data[0].id
-        await this.addEstimateItems(estimateId, estimate.items)
+        const itemsResult = await this.addEstimateItems(estimateId, estimate.items)
+        if (!itemsResult.success) {
+          await supabase.from(TABLE_ESTIMATES).delete().eq("id", estimateId)
+          throw new Error("Unable to save estimate items")
+        }
       }
 
       return { success: true, estimateId: data?.[0]?.id }
@@ -55,9 +72,8 @@ export class CostDatabaseService {
    * إضافة عناصر للعرض
    */
   static async addEstimateItems(estimateId: string, items: CostItem[]) {
-    const supabase = createClient()
-
     try {
+      const { supabase } = await this.authenticatedClient()
       const itemsData = items.map((item) => ({
         estimate_id: estimateId,
         item_name: item.name,
@@ -84,12 +100,12 @@ export class CostDatabaseService {
    * الحصول على جميع العروض
    */
   static async getAllEstimates() {
-    const supabase = createClient()
-
     try {
+      const { supabase, user } = await this.authenticatedClient()
       const { data, error } = await supabase
         .from(TABLE_ESTIMATES)
         .select("*")
+        .eq("user_id", user.id)
         .order("created_at", { ascending: false })
 
       if (error) throw error
@@ -104,13 +120,13 @@ export class CostDatabaseService {
    * الحصول على عرض محدد
    */
   static async getEstimate(estimateId: string) {
-    const supabase = createClient()
-
     try {
+      const { supabase, user } = await this.authenticatedClient()
       const { data: estimateData, error: estimateError } = await supabase
         .from(TABLE_ESTIMATES)
         .select("*")
         .eq("id", estimateId)
+        .eq("user_id", user.id)
         .single()
 
       if (estimateError) throw estimateError
@@ -133,9 +149,8 @@ export class CostDatabaseService {
    * تحديث عرض
    */
   static async updateEstimate(estimateId: string, updates: Partial<ProjectEstimate>) {
-    const supabase = createClient()
-
     try {
+      const { supabase, user } = await this.authenticatedClient()
       const { data, error } = await supabase
         .from(TABLE_ESTIMATES)
         .update({
@@ -156,6 +171,7 @@ export class CostDatabaseService {
           updated_at: new Date(),
         })
         .eq("id", estimateId)
+        .eq("user_id", user.id)
         .select()
 
       if (error) throw error
@@ -170,14 +186,19 @@ export class CostDatabaseService {
    * حذف عرض
    */
   static async deleteEstimate(estimateId: string) {
-    const supabase = createClient()
-
     try {
-      // حذف العناصر أولاً
-      await supabase.from(TABLE_ITEMS).delete().eq("estimate_id", estimateId)
+      const { supabase, user } = await this.authenticatedClient()
+      const { data: ownedEstimate, error: ownershipError } = await supabase
+        .from(TABLE_ESTIMATES)
+        .select("id")
+        .eq("id", estimateId)
+        .eq("user_id", user.id)
+        .single()
 
-      // ثم حذف العرض
-      const { error } = await supabase.from(TABLE_ESTIMATES).delete().eq("id", estimateId)
+      if (ownershipError || !ownedEstimate) throw new Error("Estimate not found")
+
+      await supabase.from(TABLE_ITEMS).delete().eq("estimate_id", estimateId)
+      const { error } = await supabase.from(TABLE_ESTIMATES).delete().eq("id", estimateId).eq("user_id", user.id)
 
       if (error) throw error
       return { success: true }
@@ -191,16 +212,26 @@ export class CostDatabaseService {
    * إنشاء مقارنة بين عرضين
    */
   static async createComparison(estimateId1: string, estimateId2: string, notes?: string) {
-    const supabase = createClient()
-
     try {
+      const { supabase, user } = await this.authenticatedClient()
+      const { data: ownedEstimates, error: ownershipError } = await supabase
+        .from(TABLE_ESTIMATES)
+        .select("id")
+        .in("id", [estimateId1, estimateId2])
+        .eq("user_id", user.id)
+
+      if (ownershipError || !ownedEstimates || ownedEstimates.length !== 2) {
+        throw new Error("Both estimates must belong to the current user")
+      }
+
       const { data, error } = await supabase
         .from(TABLE_COMPARISONS)
         .insert([
           {
+            user_id: user.id,
             estimate_id_1: estimateId1,
             estimate_id_2: estimateId2,
-            notes,
+            notes: notes?.slice(0, 2000),
           },
         ])
         .select()
@@ -217,10 +248,12 @@ export class CostDatabaseService {
    * الحصول على المقارنات
    */
   static async getComparisons() {
-    const supabase = createClient()
-
     try {
-      const { data, error } = await supabase.from(TABLE_COMPARISONS).select("*")
+      const { supabase, user } = await this.authenticatedClient()
+      const { data, error } = await supabase
+        .from(TABLE_COMPARISONS)
+        .select("*")
+        .eq("user_id", user.id)
 
       if (error) throw error
       return { success: true, comparisons: data || [] }
@@ -230,16 +263,10 @@ export class CostDatabaseService {
     }
   }
 
-  /**
-   * حفظ العرض المحلي كـ JSON
-   */
   static exportEstimateAsJSON(estimate: ProjectEstimate): string {
     return JSON.stringify(estimate, null, 2)
   }
 
-  /**
-   * استيراد عرض من JSON
-   */
   static importEstimateFromJSON(jsonString: string): ProjectEstimate | null {
     try {
       const estimate = JSON.parse(jsonString)
