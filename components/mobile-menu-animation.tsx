@@ -1,8 +1,7 @@
 "use client"
 
 import React from "react"
-import { motion, AnimatePresence } from "framer-motion"
-import { useReducedMotion } from "framer-motion"
+import { motion, AnimatePresence, useReducedMotion, type Variants } from "framer-motion"
 
 interface MobileMenuAnimationProps {
   children: React.ReactNode
@@ -23,7 +22,6 @@ export function MobileMenuAnimation({
 }: MobileMenuAnimationProps) {
   const prefersReducedMotion = useReducedMotion()
 
-  // If user prefers reduced motion, use simpler animations
   if (prefersReducedMotion) {
     return (
       <AnimatePresence>
@@ -42,39 +40,18 @@ export function MobileMenuAnimation({
     )
   }
 
-  // Get animation properties based on direction
   const getAnimationProps = () => {
     switch (direction) {
       case "left":
-        return {
-          initial: { x: -100, opacity: 0 },
-          animate: { x: 0, opacity: 1 },
-          exit: { x: -100, opacity: 0 },
-        }
+        return { initial: { x: -100, opacity: 0 }, animate: { x: 0, opacity: 1 }, exit: { x: -100, opacity: 0 } }
       case "right":
-        return {
-          initial: { x: 100, opacity: 0 },
-          animate: { x: 0, opacity: 1 },
-          exit: { x: 100, opacity: 0 },
-        }
+        return { initial: { x: 100, opacity: 0 }, animate: { x: 0, opacity: 1 }, exit: { x: 100, opacity: 0 } }
       case "up":
-        return {
-          initial: { y: -100, opacity: 0 },
-          animate: { y: 0, opacity: 1 },
-          exit: { y: -100, opacity: 0 },
-        }
+        return { initial: { y: -100, opacity: 0 }, animate: { y: 0, opacity: 1 }, exit: { y: -100, opacity: 0 } }
       case "down":
-        return {
-          initial: { y: 100, opacity: 0 },
-          animate: { y: 0, opacity: 1 },
-          exit: { y: 100, opacity: 0 },
-        }
+        return { initial: { y: 100, opacity: 0 }, animate: { y: 0, opacity: 1 }, exit: { y: 100, opacity: 0 } }
       default:
-        return {
-          initial: { x: 100, opacity: 0 },
-          animate: { x: 0, opacity: 1 },
-          exit: { x: 100, opacity: 0 },
-        }
+        return { initial: { x: 100, opacity: 0 }, animate: { x: 0, opacity: 1 }, exit: { x: 100, opacity: 0 } }
     }
   }
 
@@ -104,7 +81,6 @@ export function MobileMenuAnimation({
   )
 }
 
-// Staggered children animation
 export function StaggeredItems({
   children,
   staggerDelay = 0.05,
@@ -120,12 +96,10 @@ export function StaggeredItems({
 }) {
   const prefersReducedMotion = useReducedMotion()
 
-  // If user prefers reduced motion, render without animations
   if (prefersReducedMotion) {
     return <div className={className}>{children}</div>
   }
 
-  // Get animation properties based on direction
   const getItemProps = () => {
     switch (direction) {
       case "left":
@@ -141,7 +115,7 @@ export function StaggeredItems({
     }
   }
 
-  const containerVariants = {
+  const containerVariants: Variants = {
     hidden: { opacity: 0 },
     show: {
       opacity: 1,
@@ -152,7 +126,7 @@ export function StaggeredItems({
     },
   }
 
-  const itemVariants = {
+  const itemVariants: Variants = {
     hidden: getItemProps().initial,
     show: {
       ...getItemProps().animate,
@@ -166,8 +140,8 @@ export function StaggeredItems({
 
   return (
     <motion.div variants={containerVariants} initial="hidden" animate="show" className={className}>
-      {React.Children.map(children, (child) => (
-        <motion.div variants={itemVariants}>{child}</motion.div>
+      {React.Children.map(children, (child, index) => (
+        <motion.div key={index} variants={itemVariants}>{child}</motion.div>
       ))}
     </motion.div>
   )
