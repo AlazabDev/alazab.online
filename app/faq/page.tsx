@@ -6,7 +6,7 @@ import { ChevronDown } from 'lucide-react'
 
 export default function FAQPage() {
   const { language } = useLanguage()
-  const [openItem, setOpenItem] = useState<number | null>(null)
+  const [openItem, setOpenItem] = useState<string | null>(null)
 
   const content = {
     ar: {
