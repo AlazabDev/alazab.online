@@ -1,9 +1,7 @@
 "use client"
 
 import React from "react"
-
-import { motion } from "framer-motion"
-import { useReducedMotion } from "framer-motion"
+import { motion, useReducedMotion, type Variants } from "framer-motion"
 import { cn } from "@/lib/utils"
 
 interface StaggerInProps {
@@ -31,7 +29,7 @@ export function StaggerIn({
 }: StaggerInProps) {
   const prefersReducedMotion = useReducedMotion()
 
-  const getDirectionOffset = () => {
+  const getDirectionOffset = (): { x?: number; y?: number } => {
     if (prefersReducedMotion) return {}
 
     switch (direction) {
@@ -48,7 +46,7 @@ export function StaggerIn({
     }
   }
 
-  const containerVariants = {
+  const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
@@ -59,7 +57,7 @@ export function StaggerIn({
     },
   }
 
-  const itemVariants = {
+  const itemVariants: Variants = {
     hidden: {
       opacity: 0,
       ...getDirectionOffset(),
@@ -70,7 +68,7 @@ export function StaggerIn({
       y: 0,
       transition: {
         duration,
-        ease: [0.25, 0.1, 0.25, 1.0], // Smooth easing
+        ease: [0.25, 0.1, 0.25, 1] as const,
       },
     },
   }
@@ -80,7 +78,7 @@ export function StaggerIn({
       className={cn(className)}
       initial="hidden"
       whileInView="visible"
-      viewport={{ once, threshold }}
+      viewport={{ once, amount: threshold }}
       variants={prefersReducedMotion ? {} : containerVariants}
     >
       {React.Children.map(children, (child, index) => (
