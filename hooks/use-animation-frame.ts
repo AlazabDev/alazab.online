@@ -5,16 +5,14 @@ import { useRef, useEffect, useCallback } from "react"
 type AnimationFrameCallback = (time: number) => void
 
 export function useAnimationFrame(callback: AnimationFrameCallback, active = true) {
-  const requestRef = useRef<number>()
-  const previousTimeRef = useRef<number>()
+  const requestRef = useRef<number | undefined>(undefined)
+  const previousTimeRef = useRef<number | undefined>(undefined)
   const callbackRef = useRef<AnimationFrameCallback>(callback)
 
-  // Update callback ref when callback changes
   useEffect(() => {
     callbackRef.current = callback
   }, [callback])
 
-  // Set up the animation loop
   const animate = useCallback((time: number) => {
     if (previousTimeRef.current !== undefined) {
       callbackRef.current(time)
@@ -23,22 +21,25 @@ export function useAnimationFrame(callback: AnimationFrameCallback, active = tru
     requestRef.current = requestAnimationFrame(animate)
   }, [])
 
-  // Start and stop the animation loop based on active state
   useEffect(() => {
-    if (active) {
-      requestRef.current = requestAnimationFrame(animate)
-      return () => {
-        if (requestRef.current) {
-          cancelAnimationFrame(requestRef.current)
-        }
+    if (!active) {
+      previousTimeRef.current = undefined
+      return
+    }
+
+    requestRef.current = requestAnimationFrame(animate)
+    return () => {
+      if (requestRef.current !== undefined) {
+        cancelAnimationFrame(requestRef.current)
       }
+      requestRef.current = undefined
+      previousTimeRef.current = undefined
     }
   }, [animate, active])
 
-  // Clean up on unmount
   useEffect(() => {
     return () => {
-      if (requestRef.current) {
+      if (requestRef.current !== undefined) {
         cancelAnimationFrame(requestRef.current)
       }
     }
