@@ -1,20 +1,20 @@
 import { redirect } from "next/navigation"
 import { createClient } from "@/lib/supabase/server"
+import { isAdminUser } from "@/lib/auth/admin"
 import LoginForm from "@/components/login-form"
 
 export default async function LoginPage() {
-  const supabase = createClient()
-
   try {
+    const supabase = await createClient()
     const {
       data: { user },
     } = await supabase.auth.getUser()
 
     if (user) {
-      redirect("/admin")
+      redirect(isAdminUser(user) ? "/admin" : "/")
     }
-  } catch (error) {
-    // Continue to login page if there's an error
+  } catch {
+    // Render the login form if authentication is unavailable.
   }
 
   return (
