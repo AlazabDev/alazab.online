@@ -6,9 +6,8 @@ import { signOut } from "@/lib/actions"
 import { Users, Wrench, Calendar, BarChart3 } from "lucide-react"
 
 export default async function AdminDashboard() {
-  const supabase = createClient()
-
   try {
+    const supabase = await createClient()
     const {
       data: { user },
       error,
@@ -85,7 +84,7 @@ export default async function AdminDashboard() {
         </div>
       </div>
     )
-  } catch (error) {
+  } catch {
     redirect("/auth/login")
   }
 }
