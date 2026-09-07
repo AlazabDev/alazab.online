@@ -36,7 +36,7 @@ export default function ProjectsPage() {
         image="/images/project-2.png"
       />
 
-      <section className="py-16 bg-white dark:bg-gray-900">
+      <section className="py-16 bg-background">
         <div className="container mx-auto px-4">
           <SectionHeader
             eyebrow={language === "ar" ? "مجموعة مختارة" : "Curated Selection"}
@@ -67,7 +67,7 @@ export default function ProjectsPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: index * 0.08 }}
-                className="group rounded-2xl bg-white dark:bg-gray-800 shadow-sm hover:shadow-xl transition-all"
+                className="group rounded-2xl bg-card shadow-sm hover:shadow-xl transition-all"
               >
                 <div className="relative h-60 overflow-hidden rounded-t-2xl">
                   <Image

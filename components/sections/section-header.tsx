@@ -11,15 +11,15 @@ export function SectionHeader({ eyebrow, title, description, align = "center" }:
   return (
     <div className={`${alignment} max-w-3xl`}>
       {eyebrow ? (
-        <span className="inline-flex items-center rounded-full bg-[color:rgba(245,191,35,0.18)] px-4 py-2 text-xs sm:text-sm font-medium text-[var(--color-deep)] mb-4">
+        <span className="mb-4 inline-flex items-center rounded-full border border-primary/30 bg-primary/10 px-4 py-2 text-xs font-semibold tracking-wide text-primary sm:text-sm">
           {eyebrow}
         </span>
       ) : null}
-      <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-[var(--color-deep)] dark:text-white mb-4">
+      <h2 className="mb-4 text-balance text-2xl font-semibold tracking-tight text-foreground sm:text-3xl md:text-4xl">
         {title}
       </h2>
       {description ? (
-        <p className="text-sm sm:text-base md:text-lg text-[var(--color-dark)] dark:text-gray-300">{description}</p>
+        <p className="text-pretty text-sm leading-relaxed text-muted-foreground sm:text-base md:text-lg">{description}</p>
       ) : null}
     </div>
   )

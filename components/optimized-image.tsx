@@ -23,6 +23,7 @@ export function OptimizedImage({
 }: OptimizedImageProps) {
   const [isLoaded, setIsLoaded] = useState(false)
   const [isVisible, setIsVisible] = useState(false)
+  const [imageSrc, setImageSrc] = useState(src)
   const imageRef = useRef<HTMLDivElement>(null)
 
   // Set up intersection observer for lazy loading
@@ -61,8 +62,9 @@ export function OptimizedImage({
     >
       {(isVisible || props.priority) && (
         <Image
-          src={src || "/placeholder.svg"}
+          src={imageSrc || "/placeholder.svg"}
           alt={alt}
+          onError={() => setImageSrc("/placeholder.svg")}
           className={cn(fadeIn && "transition-opacity duration-500", isLoaded ? "opacity-100" : "opacity-0")}
           onLoad={() => setIsLoaded(true)}
           placeholder={lowQualityPlaceholder ? "blur" : "empty"}

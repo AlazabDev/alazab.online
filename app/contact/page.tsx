@@ -24,7 +24,7 @@ export default function ContactPage() {
         image="/images/contact-hero.png"
       />
 
-      <section className="py-16 bg-white dark:bg-gray-900">
+      <section className="py-16 bg-background">
         <div className="container mx-auto px-4">
           <div className="grid lg:grid-cols-[1.1fr_1fr] gap-12">
             <div>
@@ -57,7 +57,7 @@ export default function ContactPage() {
             </div>
 
             <div id="quote-form" className="scroll-mt-24">
-              <div className="rounded-2xl border border-[color:rgba(245,191,35,0.2)] bg-white dark:bg-gray-800 p-6 sm:p-8 shadow-sm">
+              <div className="rounded-2xl border border-[color:rgba(245,191,35,0.2)] bg-card p-6 sm:p-8 shadow-sm">
                 <h3 className="text-xl sm:text-2xl font-bold text-[var(--color-deep)] dark:text-white mb-2">
                   {language === "ar" ? "طلب عرض سعر" : "Request a Quote"}
                 </h3>

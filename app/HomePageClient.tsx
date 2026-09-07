@@ -63,7 +63,7 @@ export default function HomePageClient() {
         {/* Floating Decorative Elements - RTL/LTR Responsive */}
         <div className="absolute inset-0 z-20 pointer-events-none overflow-hidden">
           <motion.div
-            className={`absolute top-16 sm:top-20 ${isRTL ? "right-4 sm:right-10" : "left-4 sm:left-10"} text-yellow-300/20`}
+            className={`absolute top-16 sm:top-20 ${isRTL ? "right-4 sm:right-10" : "left-4 sm:left-10"} text-primary/20`}
             animate={{
               y: [0, -20, 0],
               rotate: [0, 5, 0],
@@ -78,7 +78,7 @@ export default function HomePageClient() {
           </motion.div>
 
           <motion.div
-            className={`absolute top-32 sm:top-40 ${isRTL ? "left-4 sm:left-20" : "right-4 sm:right-20"} text-yellow-300/15`}
+            className={`absolute top-32 sm:top-40 ${isRTL ? "left-4 sm:left-20" : "right-4 sm:right-20"} text-primary/15`}
             animate={{
               y: [0, 15, 0],
               rotate: [0, -5, 0],
@@ -161,7 +161,7 @@ export default function HomePageClient() {
                 <Link href="/services" className="w-full sm:w-auto">
                   <AnimatedButton
                     size="lg"
-                    className="bg-yellow-600 hover:bg-yellow-700 text-white font-semibold px-6 sm:px-8 py-3 sm:py-4 w-full sm:w-auto shadow-xl hover:shadow-2xl transition-all duration-300 text-sm sm:text-base"
+                    className="bg-primary hover:bg-accent text-primary-foreground font-semibold px-6 sm:px-8 py-3 sm:py-4 w-full sm:w-auto shadow-xl hover:shadow-2xl transition-all duration-300 text-sm sm:text-base"
                     hoverEffect="lift"
                     iconAnimation={true}
                   >
@@ -335,7 +335,7 @@ export default function HomePageClient() {
       </section>
 
       {/* Enhanced About Us Section */}
-      <section className="py-8 sm:py-12 md:py-16 lg:py-20 bg-white dark:bg-gray-900">
+      <section className="py-8 sm:py-12 md:py-16 lg:py-20 bg-background">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <FadeIn>
             <div className="text-center mb-8 sm:mb-12 md:mb-16 max-w-5xl mx-auto">
@@ -376,7 +376,7 @@ export default function HomePageClient() {
               <FadeIn key={stat.key} direction="up" delay={0.1 * (index + 1)}>
                 <motion.div
                   whileHover={{ scale: 1.05, y: -5 }}
-                  className="p-4 sm:p-6 bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-700 rounded-xl sm:rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300"
+                  className="p-4 sm:p-6 bg-card border border-border rounded-xl sm:rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300"
                 >
                   <div className="flex justify-center mb-2 sm:mb-3">
                     <stat.icon className="h-6 w-6 sm:h-8 sm:w-8 text-yellow-600 dark:text-yellow-400" />
@@ -397,7 +397,7 @@ export default function HomePageClient() {
       </section>
 
       {/* Enhanced Services Section - RTL/LTR Support */}
-      <section className="py-8 sm:py-12 md:py-16 lg:py-20 bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900">
+      <section className="py-8 sm:py-12 md:py-16 lg:py-20 bg-muted/40">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <FadeIn>
             <div className="text-center mb-8 sm:mb-12 md:mb-16 max-w-4xl mx-auto">
@@ -432,7 +432,7 @@ export default function HomePageClient() {
                   whileHover={{ y: -8 }}
                   className="group h-full"
                 >
-                  <div className="bg-white dark:bg-gray-900 p-4 sm:p-6 md:p-8 rounded-xl sm:rounded-2xl shadow-sm hover:shadow-xl transition-all duration-500 h-full flex flex-col">
+                  <div className="bg-background p-4 sm:p-6 md:p-8 rounded-xl sm:rounded-2xl shadow-sm hover:shadow-xl transition-all duration-500 h-full flex flex-col">
                     {/* Enhanced Icon Container */}
                     <motion.div
                       whileHover={{ rotate: 15, scale: 1.1 }}

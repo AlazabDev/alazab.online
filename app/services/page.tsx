@@ -28,7 +28,7 @@ export default function ServicesPage() {
         image="/images/services-hero.png"
       />
 
-      <section className="py-16 bg-white dark:bg-gray-900">
+      <section className="py-16 bg-background">
         <div className="container mx-auto px-4">
           <SectionHeader
             eyebrow={language === "ar" ? "الخدمات الرئيسية" : "Core Services"}
@@ -48,7 +48,7 @@ export default function ServicesPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="rounded-2xl border border-[color:rgba(245,191,35,0.2)] bg-white dark:bg-gray-800 p-6 shadow-sm"
+                className="rounded-2xl border border-[color:rgba(245,191,35,0.2)] bg-card p-6 shadow-sm"
               >
                 <div className="flex items-center gap-3 mb-4">
                   <div className="h-12 w-12 rounded-xl bg-[color:rgba(245,191,35,0.2)] flex items-center justify-center">
@@ -88,7 +88,7 @@ export default function ServicesPage() {
           />
           <div className="mt-12 grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {PROCESS_STEPS.map((step) => (
-              <div key={step.key} className="rounded-2xl bg-white dark:bg-gray-800 p-6 shadow-sm">
+              <div key={step.key} className="rounded-2xl bg-card p-6 shadow-sm">
                 <span className="text-2xl font-bold text-[var(--color-primary)]">{step.number}</span>
                 <h3 className="mt-4 text-lg font-semibold text-[var(--color-deep)] dark:text-white">
                   {language === "ar" ? step.titleAr : step.titleEn}
@@ -102,7 +102,7 @@ export default function ServicesPage() {
         </div>
       </section>
 
-      <section className="py-16 bg-white dark:bg-gray-900">
+      <section className="py-16 bg-background">
         <div className="container mx-auto px-4">
           <div className="grid lg:grid-cols-2 gap-10 items-center">
             <div className="relative h-[420px] rounded-2xl overflow-hidden shadow-lg">

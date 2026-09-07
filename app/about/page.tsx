@@ -27,7 +27,7 @@ export default function AboutPage() {
         image="/images/about-team.png"
       />
 
-      <section className="py-16 bg-white dark:bg-gray-900">
+      <section className="py-16 bg-background">
         <div className="container mx-auto px-4">
           <SectionHeader
             eyebrow={language === "ar" ? "تعريف الشركة" : "Company Overview"}
@@ -105,7 +105,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section className="py-16 bg-white dark:bg-gray-900">
+      <section className="py-16 bg-background">
         <div className="container mx-auto px-4">
           <SectionHeader
             eyebrow={language === "ar" ? "الإدارة التنفيذية" : "Leadership"}

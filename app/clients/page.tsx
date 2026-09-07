@@ -24,7 +24,7 @@ export default function ClientsPage() {
         image="/construction-site-overview.png"
       />
 
-      <section className="py-16 bg-white dark:bg-gray-900">
+      <section className="py-16 bg-background">
         <div className="container mx-auto px-4">
           <SectionHeader
             eyebrow={language === "ar" ? "شركاء النجاح" : "Success Partners"}
@@ -39,7 +39,7 @@ export default function ClientsPage() {
             {CLIENT_LOGOS.map((client) => (
               <div
                 key={client.nameEn}
-                className="rounded-2xl border border-[color:rgba(245,191,35,0.2)] bg-white dark:bg-gray-800 px-4 py-6 text-center shadow-sm"
+                className="rounded-2xl border border-[color:rgba(245,191,35,0.2)] bg-card px-4 py-6 text-center shadow-sm"
               >
                 <div className="text-lg font-bold text-[var(--color-deep)] dark:text-white">
                   {language === "ar" ? client.nameAr : client.nameEn}
@@ -66,7 +66,7 @@ export default function ClientsPage() {
           />
           <div className="mt-12 grid lg:grid-cols-3 gap-6">
             {TESTIMONIALS.map((item) => (
-              <div key={item.nameEn} className="rounded-2xl bg-white dark:bg-gray-800 p-6 shadow-sm">
+              <div key={item.nameEn} className="rounded-2xl bg-card p-6 shadow-sm">
                 <Quote className="h-8 w-8 text-[var(--color-primary)]" />
                 <p className="mt-4 text-sm text-[var(--color-dark)] dark:text-gray-300">
                   {language === "ar" ? item.quoteAr : item.quoteEn}

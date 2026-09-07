@@ -6,6 +6,11 @@
 :root {
   --background: #f7f5f0;
   --foreground: #1e1e1c;
+  --color-primary: #b99a63;
+  --color-primary-alt: #d6c29a;
+  --color-deep: #1e1e1c;
+  --color-dark: #6f6c64;
+  --color-light: #ebe8e0;
   --card: #ffffff;
   --card-foreground: #1e1e1c;
   --popover: #ffffff;

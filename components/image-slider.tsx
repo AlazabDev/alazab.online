@@ -60,7 +60,7 @@ export function ImageSlider({
       case "dark":
         return "bg-black/50"
       case "pattern":
-        return "bg-black/40 [mask-image:url('/images/pattern.png')] [mask-size:30px]"
+        return "bg-secondary/40"
       case "none":
       default:
         return ""
