@@ -1,6 +1,7 @@
 "use client"
 
 import { useActionState } from "react"
+import { useFormStatus } from "react-dom"
 import { signUp } from "@/lib/actions"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -9,6 +10,27 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Loader2, Mail, Lock } from "lucide-react"
 import Link from "next/link"
+
+function SignUpSubmitButton() {
+  const { pending } = useFormStatus()
+
+  return (
+    <Button
+      type="submit"
+      className="w-full bg-yellow-500 hover:bg-yellow-600 text-slate-900 font-semibold"
+      disabled={pending}
+    >
+      {pending ? (
+        <>
+          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+          جاري إنشاء الحساب...
+        </>
+      ) : (
+        "إنشاء حساب"
+      )}
+    </Button>
+  )
+}
 
 export default function SignUpForm() {
   const [state, formAction] = useActionState(signUp, null)
@@ -43,8 +65,10 @@ export default function SignUpForm() {
                 name="email"
                 type="email"
                 required
+                autoComplete="email"
+                maxLength={254}
                 className="pl-10 bg-slate-700/50 border-slate-600 text-white placeholder:text-slate-400"
-                placeholder="your-email@al-azab.co"
+                placeholder="your-email@alazab.com"
               />
             </div>
           </div>
@@ -60,27 +84,16 @@ export default function SignUpForm() {
                 name="password"
                 type="password"
                 required
-                minLength={6}
+                autoComplete="new-password"
+                minLength={12}
+                maxLength={256}
                 className="pl-10 bg-slate-700/50 border-slate-600 text-white placeholder:text-slate-400"
-                placeholder="••••••••"
+                placeholder="••••••••••••"
               />
             </div>
           </div>
 
-          <Button
-            type="submit"
-            className="w-full bg-yellow-500 hover:bg-yellow-600 text-slate-900 font-semibold"
-            disabled={state?.loading}
-          >
-            {state?.loading ? (
-              <>
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                جاري إنشاء الحساب...
-              </>
-            ) : (
-              "إنشاء حساب"
-            )}
-          </Button>
+          <SignUpSubmitButton />
 
           <div className="text-center">
             <Link href="/auth/login" className="text-yellow-400 hover:text-yellow-300 text-sm">
